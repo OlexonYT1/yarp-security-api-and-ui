@@ -39,6 +39,10 @@ User accounts for login in Security UI:
 *If you want to run the integration test project, pls comment this line: 
 `await Task.Delay(120000);` in AspireFixiture.cs it's only there for github actions (waiting for Keycloak to be up).*
 
+4. The endpoints
+
+Open the security api /scalar to see all available endpoints.
+
 ## Customization
 
 You can modify the setup based on your requirements. The project is configured with Keycloak and RabbitMQ (for revoke cache requests) but is compatible with other systems like Azure Service Bus (tested) and 0Auth (tested). You can also remove some parts if needed (caching, service bus)
