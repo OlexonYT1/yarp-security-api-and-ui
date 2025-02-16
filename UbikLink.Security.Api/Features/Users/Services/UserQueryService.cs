@@ -39,7 +39,7 @@ namespace UbikLink.Security.Api.Features.Users.Services
                        AND su.subscription_id = t.subscription_id
                        """;
 
-            var activeAndOwner = await con.QuerySingleOrDefaultAsync<(bool? Active,bool? Owner)>(sql, new { userId = user.Id, user.SelectedTenantId });
+            var (Active, Owner) = await con.QuerySingleOrDefaultAsync<(bool? Active,bool? Owner)>(sql, new { userId = user.Id, user.SelectedTenantId });
 
             if (con.State == System.Data.ConnectionState.Open)
                 await con.CloseAsync();
@@ -48,8 +48,8 @@ namespace UbikLink.Security.Api.Features.Users.Services
             {
                 AuthId = user.AuthId,
                 Id = user.Id,
-                IsActiveInSelectedSubscription = activeAndOwner.Active == null ? false : (bool)activeAndOwner.Active,
-                IsSubOwnerOfTheSelectetdTenant = activeAndOwner.Owner == null ? false : (bool)activeAndOwner.Owner,
+                IsActiveInSelectedSubscription = Active != null && (bool)Active,
+                IsSubOwnerOfTheSelectetdTenant = Owner != null && (bool)Owner,
                 SelectedTenantId = user.SelectedTenantId,
                 Email = user.Email,
                 Firstname = user.Firstname,
