@@ -1,0 +1,95 @@
+﻿@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Security.UI.Client.Components.Shared
+<ErrorBoundary>
+    <ChildContent>
+        <EditForm Model="Add" id="add_sub_tenant" novalidate OnValidSubmit="HandleSubmitAsync">
+            <DataAnnotationsValidator />
+            <FluentTabs @bind-ActiveTabId="@activeId" Size="TabSize.Large">
+                <FluentTab Id="tab-info">
+                    <Header>
+                        <div class="tw-flex tw-flex-row tw-rounded tw-pt-1 sm:tw-px-3 sm:tw-me-2" style="background-color: var(--neutral-fill-stealth-rest);font-weight:bold">
+                            <FluentIcon Class="tw-me-2" Value="@(new Icons.Regular.Size16.Info())" />
+                            Base config
+                        </div>
+                    </Header>
+                    <Content>
+                        <div class="tw-mb-3 tw-h-auto tw-min-h-[250px] tw-overflow-auto">
+                            <div class="tw-flex tw-w-full tw-flex-col">
+                                <div class="tw-mb-2 tw-mt-6 tw-w-[250px]">
+                                    <FluentTextField AriaLabel="Label" Style="width:100%;" Required="true" @bind-Value="Add.Label" MaxLength="50" Label="Label"></FluentTextField>
+                                    <FluentValidationMessage For="@(() => Add.Label)" />
+                                </div>
+                                <div>
+                                    <FluentSwitch @bind-Value="Add.IsActivated" Label="Active" AriaLabel="Active"></FluentSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </Content>
+                </FluentTab>
+                <FluentTab Id="tab-users">
+                    <Header>
+                        <div class="tw-flex tw-flex-row tw-rounded tw-pt-1 sm:tw-px-3" style="background-color: var(--neutral-fill-stealth-rest);font-weight:bold">
+                            <FluentIcon Class="tw-me-2" Value="@(new Icons.Regular.Size16.People())" />
+                            Linked users
+                        </div>
+                    </Header>
+                    <Content>
+                        <div class="tw-mb-8 tw-mt-6">
+                            <div class="tw-mb-2">
+                                <p>Select the users you want to link to the tenant</p>
+                            </div>
+                            <UbikLoading IsLoading="_isLoading"></UbikLoading>
+                            <UbikGridSearchAndItemsPerPage PlaceHolder="Search" @bind-SearchValue="@_searchValue"
+                                                           @bind-SelectedItemsPerPage="@_pagination.ItemsPerPage" />
+                            <div class="tw-mb-3 tw-h-auto tw-overflow-auto">
+                                <div class="tw-flex tw-w-full tw-flex-col">
+                                    <div class="@(_isLoading?"tw-hidden":"tw-block") tw-min-h-[250px]">
+                                        @if (FilteredUsers != null)
+                                        {
+                                            <FluentDataGrid Items="@FilteredUsers"
+                                                            ResizableColumns=true
+                                                            MultiLine="true"
+                                                            ShowHover="true"
+                                                            RowSize="DataGridRowSize.Small"
+                                                            TGridItem="TenantUserUiObj"
+                                                            GenerateHeader="GenerateHeaderOption.Sticky"
+                                                            Pagination="_pagination">
+
+                                                <SelectColumn Style="min-width:40px;" TGridItem="TenantUserUiObj"
+                                                              SelectFromEntireRow="false"
+                                                              SelectMode="DataGridSelectMode.Multiple"
+                                                              Property="@(e => e.Selected)"
+                                                              OnSelect="@(e => e.Item.Selected = e.Selected)"
+                                                              SelectAll="@(FilteredUsers!.All(p => p.Selected))"
+                                                              SelectAllChanged="@(all => FilteredUsers!.ToList().ForEach(p => p.Selected = (all == true)))" />
+
+                                                <PropertyColumn Width="1fr" Class="tw-text-xs" Style="min-width:180px" Property="@(p => p.Id)" Sortable="true" />
+                                                <PropertyColumn Class="tw-align-middle" Width="1.7fr" Style="min-width:160px;" Property="@(p => p.Email)" IsDefaultSortColumn="true" Sortable="true" />
+                                                <PropertyColumn Width="1fr" Style="min-width:180px" Property="@(p => p.Firstname)" Sortable="true" />
+                                                <PropertyColumn Width="1fr" Style="min-width:180px" Property="@(p => p.Lastname)" Sortable="true" />
+                                            </FluentDataGrid>
+                                            @if (FilteredUsers!.Count() > _pagination.ItemsPerPage)
+                                            {
+                                                <FluentPaginator State="@_pagination" />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Content>
+                </FluentTab>
+            </FluentTabs>
+            <FluentValidationSummary class="tw-mt-6">
+            </FluentValidationSummary>
+            <UbikContentBottom>
+                <UbikFormBottomActions FormId="add_sub_tenant" OnClose="Close" IsSavingInProgress="_isSaving" />
+            </UbikContentBottom>
+        </EditForm>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Add tenant module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>
+

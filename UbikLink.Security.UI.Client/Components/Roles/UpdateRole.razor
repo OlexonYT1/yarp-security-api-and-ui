@@ -1,0 +1,104 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Security.UI.Client.Components.Shared;
+
+<ErrorBoundary>
+    <ChildContent>
+        <UbikFluentToolbar>
+            <FluentOverflowItem>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                              Disabled="@(!RendererInfo.IsInteractive)"
+                              OnClick="LoadOrRefreshDataAsync"
+                              Loading="@_isSaving">Refresh</FluentButton>
+            </FluentOverflowItem>
+        </UbikFluentToolbar>
+        <EditForm Model="@Edit" OnValidSubmit="HandleValidSubmitAsync" id="edit_role" novalidate>
+            <DataAnnotationsValidator />
+            <FluentTabs Size="TabSize.Large">
+                <FluentTab Id="tab-info">
+                    <Header>
+                        <div class="tw-flex tw-flex-row tw-rounded tw-pt-1 sm:tw-px-3 sm:tw-me-2" style="background-color: var(--neutral-fill-stealth-rest);font-weight:bold">
+                            <FluentIcon Class="tw-me-2" Value="@(new Icons.Regular.Size16.Info())" />
+                            Base config
+                        </div>
+                    </Header>
+                    <Content>
+                        <div class="tw-mb-3 tw-mt-6 tw-h-auto tw-overflow-auto">
+                            <div class="tw-flex tw-w-full tw-flex-col">
+                                <div class="tw-mb-2 tw-w-[250px]">
+                                    <FluentTextField AriaLabel="Code" Style="width:100%;" Required="true" @bind-Value="Edit.Code" MaxLength="50" Label="Code"></FluentTextField>
+                                    <FluentValidationMessage For="@(() => Edit.Code)" />
+                                </div>
+                                <div class="tw-w-full sm:tw-w-[450px]">
+                                    <FluentTextArea AriaLabel="Description" Style="width:100%;" Rows="5" Cols="50" MaxLength="500" @bind-Value="Edit.Description" Label="Description"></FluentTextArea>
+                                    <FluentValidationMessage For="@(() => Edit.Description)" />
+                                </div>
+                            </div>
+                        </div>
+                    </Content>
+                </FluentTab>
+                <FluentTab Id="tab-auth">
+                    <Header>
+                        <div class="tw-flex tw-flex-row tw-rounded tw-pt-1 sm:tw-px-3" style="background-color: var(--neutral-fill-stealth-rest);font-weight:bold">
+                            <FluentIcon Class="tw-me-2" Value="@(new Icons.Regular.Size16.Key())" />
+                            Authorizations
+                        </div>
+                    </Header>
+                    <Content>
+                        <div class="tw-mb-8 tw-mt-6">
+                            <div class="tw-mb-2">
+                                <p>Select the authorizations you want to link to the role.</p>
+                            </div>
+                            <UbikLoading IsLoading="_isLoading"></UbikLoading>
+                            <UbikGridSearchAndItemsPerPage PlaceHolder="Search" @bind-SearchValue="@_searchValue"
+                                                           @bind-SelectedItemsPerPage="@_pagination.ItemsPerPage" />
+                            <div class="tw-mb-3 tw-h-auto tw-overflow-auto">
+                                <div class="tw-flex tw-w-full tw-flex-col">
+                                    <div class="@(_isLoading?"tw-hidden":"tw-block") tw-min-h-[250px]">
+                                        @if (FilteredAuthorizations != null)
+                                        {
+                                            <FluentDataGrid Items="@FilteredAuthorizations"
+                                                            ResizableColumns=true
+                                                            MultiLine="true"
+                                                            ShowHover="true"
+                                                            RowSize="DataGridRowSize.Small"
+                                                            TGridItem="AuthorizationUiObj"
+                                                            GenerateHeader="GenerateHeaderOption.Sticky"
+                                                            Pagination="_pagination">
+
+                                                <SelectColumn Style="min-width:40px;" TGridItem="AuthorizationUiObj"
+                                                              SelectFromEntireRow="false"
+                                                              SelectMode="DataGridSelectMode.Multiple"
+                                                              Property="@(e => e.Selected)"
+                                                              OnSelect="@(e => e.Item.Selected = e.Selected)"
+                                                              SelectAll="@(FilteredAuthorizations!.All(p => p.Selected))"
+                                                              SelectAllChanged="@(all => FilteredAuthorizations!.ToList().ForEach(p => p.Selected = (all == true)))" />
+
+                                                <PropertyColumn Width="1fr" Class="tw-text-xs" Style="min-width:180px" Property="@(p => p.Id)" Sortable="true" />
+                                                <PropertyColumn Class="tw-align-middle" Width="1.7fr" Style="min-width:160px;" Property="@(p => p.Code)" IsDefaultSortColumn="true" Sortable="true" />
+                                                <PropertyColumn Width="1fr" Style="min-width:180px" Property="@(p => p.Description)" Sortable="true" />
+                                            </FluentDataGrid>
+                                            @if (FilteredAuthorizations!.Count() > _pagination.ItemsPerPage)
+                                            {
+                                                <FluentPaginator State="@_pagination" />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Content>
+                </FluentTab>
+            </FluentTabs>
+
+            <FluentValidationSummary class="tw-mt-6">
+            </FluentValidationSummary>
+            <UbikContentBottom>
+                <UbikFormBottomActions FormId="edit_role" OnClose="Close" IsSavingInProgress="_isSaving" />
+            </UbikContentBottom>
+        </EditForm>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Edit role module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

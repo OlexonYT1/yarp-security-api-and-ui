@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d75178cb-f493-4af0-9129-aa9258951084</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.0.0" />
+    <PackageReference Include="BlazorPageScript" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.2.0-preview.1.25105.6" />
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="9.0.0" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.4" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.4" />
+    <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UbikLink.Common.RazorUI\UbikLink.Common.RazorUI.csproj" />
+    <ProjectReference Include="..\UbikLink.Common\UbikLink.Common.csproj" />
+    <ProjectReference Include="..\UbikLink.Security.UI.Client\UbikLink.Security.UI.Client.csproj" />
+    <ProjectReference Include="..\UbikLink.Security.UI.Shared\UbikLink.Security.UI.Shared.csproj" />
+    <ProjectReference Include="..\UbikLink.ServiceDefaults\UbikLink.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

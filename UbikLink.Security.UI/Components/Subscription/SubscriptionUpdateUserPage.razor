@@ -1,0 +1,37 @@
+﻿@inherits Basepage
+
+@page "/subscription/users/{Id:guid}"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Authorizations
+@using UbikLink.Security.UI.Client.Components.Subscription
+
+<PageTitle>Update users in subscription</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="true" CloseUrl="subscription" />
+
+    @if (_isSubscriptionOwner)
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-4 tw-mt-3">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Edit users</h2>
+                <p>Edit user in the selected subscription.</p>
+                <p class="tw-font-bold">If you want to attach a user to a tenant, edit a tenant from your subscription page.</p>
+                <p class="tw-italic">Selected subscription:</p>
+                <p class="tw-italic">@_selectedSubscriptionId</p>
+            </div>
+        </FluentStack>
+
+        <SubscriptionUsersUpdate @rendermode="InteractiveAuto"
+                                   SelectedSubscriptionId="_selectedSubscriptionId"
+                                   Id="Id">
+        </SubscriptionUsersUpdate>
+    }
+    else
+    {
+        <NoRight Message="You are not the owner of the selected subscription." />
+    }
+</UbikContentContainer>

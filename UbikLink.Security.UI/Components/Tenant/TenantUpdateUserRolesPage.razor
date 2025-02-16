@@ -1,0 +1,34 @@
+﻿@inherits Basepage
+
+@page "/tenant/users/{Id:guid}"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Tenant;
+
+<PageTitle>Manage user roles</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="true" CloseUrl="tenant" />
+
+    @if (_isTenantManager)
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Tenant user roles</h2>
+                <p class="tw-mb-2">Edit the roles assigned to this user.</p>
+                <p class="tw-mb-2 tw-italic">To disactivate or change user config you need to be the owner of the subscription.</p>
+            </div>
+        </FluentStack>
+
+        if(User?.SelectedTenantId != null)
+        {
+            <TenantUpdateUserRoles @rendermode="InteractiveAuto" SelectedTenantId="(Guid)User.SelectedTenantId" id="Id" />
+        }
+    }
+    else
+    {
+        <NoRight Message="You are not the manager of the selected tenant." />
+    }
+</UbikContentContainer>

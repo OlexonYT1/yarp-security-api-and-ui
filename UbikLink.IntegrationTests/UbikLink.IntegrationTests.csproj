@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+		<UserSecretsId>35c5ac38-db48-44c5-8c16-d372709556e3</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.Testing" Version="9.0.0" />
+		<PackageReference Include="coverlet.collector" Version="6.0.4">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="MartinCostello.Logging.XUnit" Version="0.5.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+		<PackageReference Include="xunit" Version="2.9.3" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\UbikLink.AppHost\UbikLink.AppHost.csproj" />
+	  <ProjectReference Include="..\UbikLink.Common\UbikLink.Common.csproj" />
+	  <ProjectReference Include="..\UbikLink.Security.Api\UbikLink.Security.Api.csproj" />
+	  <ProjectReference Include="..\UbikLink.Security.Contracts\UbikLink.Security.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System.Net" />
+		<Using Include="Microsoft.Extensions.DependencyInjection" />
+		<Using Include="Aspire.Hosting.ApplicationModel" />
+		<Using Include="Aspire.Hosting.Testing" />
+		<Using Include="Xunit" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Realm\ubik-realm.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
+
+

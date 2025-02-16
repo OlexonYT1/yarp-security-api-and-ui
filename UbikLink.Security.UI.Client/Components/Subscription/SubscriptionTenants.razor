@@ -1,0 +1,85 @@
+﻿@using UbikLink.Common.RazorUI.Components;
+
+<div class="tw-mb-4">
+    <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
+        <div>
+            <p class="tw-mb-2 tw-font-bold">Tenants linked to your subscription</p>
+            <p class="tw-italic">You will be able to attach users if you edit your tenants...</p>
+        </div>
+    </FluentStack>
+    <UbikFluentToolbar>
+        <FluentOverflowItem>
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Add())"
+                          Disabled="@(!IsMainLoading && !(Subscription?.CanAddTenant ?? false))"
+                          OnClick="AddTenantAsync">
+                Add
+            </FluentButton>
+        </FluentOverflowItem>
+        <FluentOverflowItem>
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())"
+                          Disabled="@(!IsMainLoading && !(Subscription?.CanEditOrDeleteTenant ?? false))"
+                          OnClick="EditTenantAsync">
+                Edit
+            </FluentButton>
+        </FluentOverflowItem>
+        <FluentOverflowItem>
+            <FluentButton IconStart="IconActivateDisactivate"
+                          Disabled="@(!IsMainLoading && !(Subscription?.CanTenantToggleActivation ?? false))"
+                          OnClick="ToggleTenantActivationAsync">
+                @LabelActivateDisactivate
+            </FluentButton>
+        </FluentOverflowItem>
+        <FluentOverflowItem>
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())"
+                          Disabled="@(!IsMainLoading && !(Subscription?.CanEditOrDeleteTenant ?? false))"
+                          OnClick="DeleteTenantAsync">
+                Delete
+            </FluentButton>
+        </FluentOverflowItem>
+    </UbikFluentToolbar>
+</div>
+
+<UbikLoading IsLoading="IsMainLoading"></UbikLoading>
+<div class="@(IsMainLoading?"tw-hidden":"tw-block") tw-flex tw-max-h-[300px] tw-flex-col tw-overflow-y-auto md:tw-max-h-[700px] md:tw-flex-row">
+    @if (Subscription?.Tenants != null)
+    {
+        if (Subscription.Tenants.Count > 0)
+        {
+            <div class="tw-grid-cols-1 tw-grid tw-gap-3 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
+                @foreach (var tenant in Subscription.Tenants)
+                {
+                    <FluentCard MinimalStyle="true">
+                        <div class="tw-flex tw-flex-col">
+                            <div class="tw-text-xs">
+                                @tenant.Id
+                            </div>
+                            <div class="tw-font-semibold">
+                                @tenant.Label
+                            </div>
+                            <div>
+                                Active: @tenant.IsActivated
+                            </div>
+                            <div>
+                                Current: @(tenant.Id == UserInfo?.SelectedTenantId)
+                            </div>
+                            <div class="tw-flex tw-flex-row tw-justify-between">
+                                <div>
+                                    Users count: @tenant.UsersCount
+                                </div>
+                                <div>
+                                    <FluentCheckbox @bind-Value:get="tenant.Selected" @bind-Value:set="x => OnSelectTenantAsync(x, tenant.Id)" />
+                                </div>
+                            </div>
+                        </div>
+                    </FluentCard>
+                }
+            </div>
+        }
+        else
+        {
+            <div>
+                No linked tenant. Add one.
+            </div>
+        }
+    }
+</div>

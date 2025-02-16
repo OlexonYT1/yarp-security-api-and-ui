@@ -1,0 +1,26 @@
+﻿<div>
+    <FluentCard>
+        <FluentStack HorizontalAlignment="HorizontalAlignment.Start"
+                     VerticalAlignment="VerticalAlignment.Center"
+                     Orientation="Orientation.Horizontal">
+
+            <FluentIcon Class="tw-mr-2" Color="Color.Error"
+                        Value="@(new Icons.Regular.Size48.EmojiHand())" />
+
+            <div class="tw-flex tw-flex-col">
+                <FluentLabel Color="Color.Error">
+                    You don't have the right to access this page.
+                </FluentLabel>
+                <FluentLabel>
+                    @Message
+                </FluentLabel>
+            </div>
+        </FluentStack>
+    </FluentCard>
+</div>
+
+@code{
+    [Parameter]
+        public string Message { get; set; } = "If you need an access, please contact your administrator.";
+}
+

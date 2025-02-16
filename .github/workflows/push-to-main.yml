@@ -1,0 +1,49 @@
+name: Integration_Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      # Parameters__auth-base-url: ${{ secrets.AUTH_BASE_URL }}
+      # Parameters__test-auth0-client-id: ${{ secrets.TEST_AUTH0_CLIENT_ID }}
+      # Parameters__test-auth0-client-secret: ${{ secrets.TEST_AUTH0_CLIENT_SECRET }}
+      # Parameters__auth0-audience: ${{ secrets.AUTH0_AUDIENCE }}
+      # Parameters__test-auth0-admin-username: ${{ secrets.TEST_AUTH0_ADMIN_USERNAME }}
+      # Parameters__test-auth0-admin-password: ${{ secrets.TEST_AUTH0_ADMIN_PASSWORD }}
+      # Parameters__test-auth0-user1-username: ${{ secrets.TEST_AUTH0_USER1_USERNAME }}
+      # Parameters__test-auth0-user1-password: ${{ secrets.TEST_AUTH0_USER1_PASSWORD }}
+      # Parameters__test-auth0-user2-username: ${{ secrets.TEST_AUTH0_USER2_USERNAME }}
+      # Parameters__test-auth0-user2-password: ${{ secrets.TEST_AUTH0_USER2_PASSWORD }}
+      # Parameters__test-auth0-userinactive-username: ${{ secrets.TEST_AUTH0_USERINACTIVE_USERNAME }}
+      # Parameters__test-auth0-userinactive-password: ${{ secrets.TEST_AUTH0_USERINACTIVE_PASSWORD }}
+      # ConnectionStrings__messaging: ${{ secrets.MESSAGING_URL }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run tests
+      if: ${{ success() }}
+      run: dotnet test --no-build --configuration Release
+

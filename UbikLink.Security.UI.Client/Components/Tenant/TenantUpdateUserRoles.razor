@@ -1,0 +1,64 @@
+﻿@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Security.UI.Client.Components.Shared
+<ErrorBoundary>
+    <ChildContent>
+        <UbikFluentToolbar>
+            <FluentOverflowItem>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                              Disabled="@(!RendererInfo.IsInteractive)"
+                              OnClick="LoadOrRefreshDataAsync"
+                              Loading="@_isSaving">Refresh</FluentButton>
+            </FluentOverflowItem>
+        </UbikFluentToolbar>
+        <EditForm Model="Edit" id="edit_role" novalidate OnValidSubmit="HandleSubmitAsync">
+            <div class="tw-mb-8 tw-mt-6">
+                <div class="tw-mb-2">
+                    <p>Select the roles you want to link to the user</p>
+                </div>
+                <UbikLoading IsLoading="_isLoading"></UbikLoading>
+                <UbikGridSearchAndItemsPerPage PlaceHolder="Search" @bind-SearchValue="@_searchValue"
+                                               @bind-SelectedItemsPerPage="@_pagination.ItemsPerPage" />
+                <div class="tw-mb-3 tw-h-auto tw-overflow-auto">
+                    <div class="tw-flex tw-w-full tw-flex-col">
+                        <div class="@(_isLoading?"tw-hidden":"tw-block") tw-min-h-[250px]">
+                            @if (FilteredRoles != null)
+                            {
+                                <FluentDataGrid Items="@FilteredRoles"
+                                                ResizableColumns=true
+                                                MultiLine="true"
+                                                ShowHover="true"
+                                                RowSize="DataGridRowSize.Small"
+                                                TGridItem="RoleLightUiObj"
+                                                GenerateHeader="GenerateHeaderOption.Sticky"
+                                                Pagination="_pagination">
+
+                                    <SelectColumn Style="min-width:40px;" TGridItem="RoleLightUiObj"
+                                                  SelectFromEntireRow="false"
+                                                  SelectMode="DataGridSelectMode.Multiple"
+                                                  Property="@(e => e.Selected)"
+                                                  OnSelect="@(e => e.Item.Selected = e.Selected)"
+                                                  SelectAll="@(FilteredRoles!.All(p => p.Selected))"
+                                                  SelectAllChanged="@(all => FilteredRoles!.ToList().ForEach(p => p.Selected = (all == true)))" />
+
+                                    <PropertyColumn Width="1fr" Class="tw-text-xs" Style="min-width:180px" Property="@(p => p.Id)" Sortable="true" />
+                                    <PropertyColumn Class="tw-align-middle" Width="1.7fr" Style="min-width:160px;" Property="@(p => p.Code)" IsDefaultSortColumn="true" Sortable="true" />
+                                </FluentDataGrid>
+                                @if (FilteredRoles!.Count() > _pagination.ItemsPerPage)
+                                {
+                                    <FluentPaginator State="@_pagination" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <UbikContentBottom>
+                <UbikFormBottomActions FormId="edit_role" OnClose="Close" IsSavingInProgress="_isSaving" />
+            </UbikContentBottom>
+        </EditForm>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Edit user module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

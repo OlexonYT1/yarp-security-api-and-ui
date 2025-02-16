@@ -1,0 +1,22 @@
+﻿@inherits Basepage
+@page "/authorizations"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Security.UI.Client.Components.Authorizations;
+
+<PageTitle>Manage authorizations</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
+
+    @if (IsMegaAdmin())
+    {
+        <Authorizations @rendermode="InteractiveAuto"></Authorizations>
+    }
+    else
+    {
+        <NoRight />
+    }
+</UbikContentContainer>
+

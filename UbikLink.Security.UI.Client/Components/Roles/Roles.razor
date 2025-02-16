@@ -1,0 +1,97 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components
+
+@attribute [StreamRendering]
+
+<ErrorBoundary>
+    <ChildContent>
+        <UbikContentGridTopPanel>
+            <UbikFluentToolbar>
+                <FluentOverflowItem>
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Add())"
+                                  Disabled="@(!RendererInfo.IsInteractive)"
+                                  OnClick="AddRole">Add</FluentButton>
+                </FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                                  Disabled="@(!RendererInfo.IsInteractive)"
+                                  OnClick="() => RefreshDataAsync(true)"
+                                  Loading="@_isLoading">Refresh</FluentButton>
+                </FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())"
+                                  Disabled="@(CountSelected!=1)"
+                                  OnClick="() => EditRole()">Edit</FluentButton>
+                </FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())"
+                                  Disabled="@(CountSelected==0)"
+                                  Loading="@_isDeletingFromToolbar"
+                                  OnClick="DeleteBatchAsync">Delete</FluentButton>
+                </FluentOverflowItem>
+            </UbikFluentToolbar>
+
+            <UbikGridSearchAndItemsPerPage PlaceHolder="Search by Id or Code" @bind-SearchValue="@_searchValue"
+                                           @bind-SelectedItemsPerPage="@_pagination.ItemsPerPage" />
+        </UbikContentGridTopPanel>
+
+        <UbikLoading IsLoading="_isLoading"></UbikLoading>
+
+        @if (_roles != null)
+        {
+            <UbikContentGridContainer IsLoading="_isLoading">
+                <FluentDataGrid Items="@FilteredRoles"
+                                ResizableColumns=true
+                                MultiLine="true"
+                                ShowHover="true"
+                                RowSize="DataGridRowSize.Small"
+                                TGridItem="RoleUiObj"
+                                Pagination="@_pagination"
+                                GenerateHeader="GenerateHeaderOption.Sticky"
+                                @ref="_grid">
+
+                    <SelectColumn @ref="_selectColumn" Style="min-width:40px;" TGridItem="RoleUiObj"
+                                  SelectFromEntireRow="false"
+                                  SelectMode="DataGridSelectMode.Multiple"
+                                  Property="@(e => e.Selected)"
+                                  OnSelect="@(e => e.Item.Selected = e.Selected)"
+                                  SelectAll="@(FilteredRoles!.All(p => p.Selected))"
+                                  SelectAllChanged="@(all => FilteredRoles!.ToList().ForEach(p => p.Selected = (all == true)))" />
+
+                    <PropertyColumn Width="1fr" Style="min-width:180px" Class="tw-text-xs" Property="@(p => p.Id)" Sortable="true" />
+                    <PropertyColumn Class="tw-align-middle" Width="0.8fr" Style="min-width:160px;" Property="@(p => p.Code)" IsDefaultSortColumn="true" Sortable="true" />
+
+                    <TemplateColumn Title="Authorizations" Width="1.2fr" Style="min-width:190px;">
+                        <FluentOverflow>
+                            @foreach (var authId in context.AuthorizationIds)
+                            {
+                                if (_authorizationsDic.ContainsKey(authId))
+                                {
+                                    <FluentOverflowItem><FluentBadge>@_authorizationsDic[authId].Code</FluentBadge></FluentOverflowItem>
+                                }
+                            }
+                        </FluentOverflow>
+                    </TemplateColumn>
+
+                    <PropertyColumn Width="1.7fr" Property="@(p => p.Description)" Style="min-width:160px;" Sortable="true" />
+
+                    <TemplateColumn Title="Actions" Style="min-width:100px;" Align="@Align.End">
+                        <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditRole(context.Id))" />
+                        <FluentButton aria-label="Delete item" OnClick="@(() => DeleteRoleAsync(context.Id))" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                    </TemplateColumn>
+
+                </FluentDataGrid>
+            </UbikContentGridContainer>
+
+            @if (FilteredRoles!.Count() > _pagination.ItemsPerPage)
+            {
+                <UbikContentBottom>
+                    <FluentPaginator State="@_pagination" />
+                </UbikContentBottom>
+            }
+        }
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Role module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

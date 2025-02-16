@@ -1,0 +1,15 @@
+﻿@using UbikLink.Common.RazorUI.Config;
+
+<div>
+
+    <FluentStack>
+        <FluentSpacer />
+        <FluentButton Appearance="@Appearance.Stealth" OnClick="ClearMsgs">
+            Dismiss all
+        </FluentButton>
+    </FluentStack>
+
+    <br />
+
+    <FluentMessageBarProvider Section="@GeneralConfig.MESSAGES_POSITION_NOTIFICATION" MaxMessageCount="7" Type="@MessageType.Notification" />
+</div>

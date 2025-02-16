@@ -1,0 +1,28 @@
+﻿@using Microsoft.FluentUI.AspNetCore.Components
+@using Icons = Microsoft.FluentUI.AspNetCore.Components.Icons
+
+<div class="tw-mb-2 tw-w-full">
+    <FluentToolbar Style="width:100%;" Class="tw-rounded">
+        <FluentOverflow @ref="@_overFlowCompo" Style="width: 100%;overflow: auto;">
+            <ChildContent>
+                @ChildContent
+            </ChildContent>
+            <MoreButtonTemplate>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.MoreHorizontal())" />
+            </MoreButtonTemplate>
+            <OverflowTemplate>
+                <FluentTooltip UseTooltipService="false" Anchor="@_overFlowCompo.IdMoreButton">
+                    <div class="tw-flex tw-flex-col">
+                        @foreach (var item in _overFlowCompo.ItemsOverflow)
+                        {
+                            <div class="tw-mb-1">
+                                @item.ChildContent
+                            </div>
+                        }
+                    </div>
+                </FluentTooltip>
+            </OverflowTemplate>
+        </FluentOverflow>
+    </FluentToolbar>
+</div>
+

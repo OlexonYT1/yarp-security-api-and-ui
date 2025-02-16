@@ -1,0 +1,4 @@
+﻿<FluentToolbar Class="tw-w-full tw-rounded">
+    <FluentButton id="submit" Class="tw-mt-1" FormId="@FormId" Type="ButtonType.Submit" aria-label="Save" Appearance="Appearance.Accent" Disabled="@(!RendererInfo.IsInteractive)" Loading="IsSavingInProgress">Save</FluentButton>
+    <FluentButton Class="tw-mt-1" Type="ButtonType.Button" aria-label="Cancel" Appearance="Appearance.Outline" Disabled="@(!RendererInfo.IsInteractive)" OnClick="OnClose">Cancel</FluentButton>
+</FluentToolbar>

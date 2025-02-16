@@ -1,0 +1,50 @@
+﻿@page "/"
+@inject ClientUserService userService;
+@inject NavigationManager navigationManager;
+@using UbikLink.Security.Contracts.Users.Results
+
+
+<PageTitle>Home</PageTitle>
+
+<h1>Security</h1>
+
+Manage your account, your subscription, or your tenant if you have the right to do so...
+
+@if(_auth != null)
+{
+    @if (_userMeResult != null)
+    {
+        <p>Email: @_userMeResult.Email</p>
+        <p>MegaAdmin: @_userMeResult.IsMegaAdmin</p>
+        <p>Activated in subscription: @_userMeResult.IsActivatedInSelectedSubscription</p>
+        <p>AuthId: @_userMeResult.AuthId</p>
+        <p>Subscriptions owner count: @_userMeResult.OwnerOfSubscriptionsIds.Count()</p>
+    }
+    else
+    {
+        <p>No user</p>
+    }
+}
+else
+{
+    <p>No auth</p>
+
+}
+
+@code{
+    [CascadingParameter]
+    private Task<AuthenticationState>? _authenticationState { get; set; }
+    private UserMeResult? _userMeResult;
+    private AuthenticationState? _auth;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (_authenticationState is not null)
+        {
+            _auth = await _authenticationState;
+            if (_auth.User.Identity!.IsAuthenticated)
+                _userMeResult = await userService.GetUserInfoAsync();
+        }
+    }
+}

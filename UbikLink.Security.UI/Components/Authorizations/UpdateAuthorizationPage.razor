@@ -1,0 +1,23 @@
+﻿@inherits Basepage
+@page "/authorizations/{Id:guid}"
+
+@using UbikLink.Common.RazorUI.Authorize
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Authorizations
+
+<PageTitle>Edit authorization</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" CloseUrl="authorizations?state=true" WithClose="true" />
+
+    @if (IsMegaAdmin())
+    {
+        <UpdateAuthorization @rendermode="InteractiveAuto" Id="Id"></UpdateAuthorization>
+    }
+    else
+    {
+        <NoRight />
+    }
+</UbikContentContainer>
+
+

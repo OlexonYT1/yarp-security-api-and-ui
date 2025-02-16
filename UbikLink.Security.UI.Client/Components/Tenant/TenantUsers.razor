@@ -1,0 +1,76 @@
+﻿@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Security.UI.Client.Components.Shared
+
+<FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
+    <div>
+        <p class="tw-mb-2 tw-font-bold">Users linked to your tenant</p>
+        <p class="tw-italic">Here, you only will be able to change the roles of your users.</p>
+    </div>
+</FluentStack>
+
+<UbikContentGridTopPanel>
+    <UbikFluentToolbar>
+        <FluentOverflowItem>
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())"
+                        Disabled="!CanEdit"
+                          OnClick="()=>EditUserAsync(null)">
+                Edit roles
+            </FluentButton>
+        </FluentOverflowItem>
+    </UbikFluentToolbar>
+    <UbikGridSearchAndItemsPerPage PlaceHolder="Search" @bind-SearchValue="@_searchValue"
+    @bind-SelectedItemsPerPage="@_pagination.ItemsPerPage" />
+</UbikContentGridTopPanel>
+<UbikLoading IsLoading="IsMainLoading"></UbikLoading>
+<div class="@(IsMainLoading?"tw-hidden":"tw-block") tw-mb-5 tw-h-auto tw-max-h-[500px] tw-w-full tw-overflow-auto">
+    <div class="tw-min-w-[800px]">
+        @if (Users != null)
+        {
+            <FluentDataGrid Items="@FilteredUsers"
+            ResizableColumns=true
+            MultiLine="true"
+            ShowHover="true"
+            RowSize="DataGridRowSize.Small"
+            TGridItem="UserWithRoleIdsUiObj"
+            Pagination="_pagination"
+            GenerateHeader="GenerateHeaderOption.Sticky">
+
+                <SelectColumn @ref="_selectColumn" Style="min-width:40px;" TGridItem="UserWithRoleIdsUiObj"
+                SelectFromEntireRow="false"
+                SelectMode="DataGridSelectMode.Single"
+                Property="@(e => e.Selected)"
+                OnSelect="@(e => e.Item.Selected = e.Selected)" />
+
+                <PropertyColumn Width="1fr" Class="tw-text-xs" Style="min-width:180px" Property="@(p => p.Id)" Sortable="true" />
+                <PropertyColumn Class="tw-align-middle" Width="1.7fr" Style="min-width:160px;" Property="@(p => p.Email)" IsDefaultSortColumn="true" Sortable="true" />
+                <PropertyColumn Width="1fr" Style="min-width:140px" Property="@(p => p.Firstname)" Sortable="true" />
+                <PropertyColumn Width="1fr" Style="min-width:140px" Property="@(p => p.Lastname)" Sortable="true" />
+
+                <TemplateColumn Title="Roles" Width="1.2fr" Style="min-width:190px;">
+                    <FluentOverflow>
+                        @foreach (var roleId in context.RoleIds)
+                        {
+                            @if (AvailableRoles != null && AvailableRoles.ContainsKey(roleId))
+                            {
+                                <FluentOverflowItem><FluentBadge>@AvailableRoles[roleId].Code</FluentBadge></FluentOverflowItem>
+                            }
+                        }
+                    </FluentOverflow>
+                </TemplateColumn>
+                <TemplateColumn Title="Actions" Style="min-width:120px;" Align="@Align.End">
+                    <FluentButton aria-label="Edit role"
+                                  IconEnd="@(new Icons.Regular.Size16.Edit())"
+                                  OnClick="() => EditUserAsync(context.Id)"
+                                   />
+               </TemplateColumn>
+
+            </FluentDataGrid>
+        }
+    </div>
+</div>
+<div>
+    @if (FilteredUsers?.Count() > _pagination.ItemsPerPage)
+    {
+        <FluentPaginator State="@_pagination" />
+    }
+</div>

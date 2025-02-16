@@ -1,0 +1,9 @@
+﻿<form method="post" class="items-center" action="account/logout">
+    <FluentButton Appearance="Appearance.Accent"
+                  IconStart="@(new Icons.Regular.Size20.SignOut())"
+                  Title="Logout"
+                  Type="ButtonType.Submit">
+        <span class="tw-hidden sm:tw-block">Logout</span>
+    </FluentButton>
+    <input class="tw-hidden" type="submit" value="submit" @ref="BtnLogout" />
+</form>

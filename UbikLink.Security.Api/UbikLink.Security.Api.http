@@ -1,0 +1,7 @@
+@UbikLink.Security.Api_HostAddress = https://localhost:7207
+
+
+
+GET {{UbikLink.Security.Api_HostAddress}}/api/v1/admin/tenants
+
+###

@@ -1,0 +1,31 @@
+﻿<div class="@(IsMainLoading?"tw-hidden":"tw-block") tw-flex tw-flex-col md:tw-flex-row">
+    @if (Tenant != null)
+    {
+        <div class="tw-flex tw-flex-col">
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Id</FluentLabel>
+                <div>
+                    <FluentLabel>@Tenant.Id</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Label</FluentLabel>
+                <div>
+                    <FluentLabel>@Tenant.Label</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>IsActive</FluentLabel>
+                <div>
+                    <FluentLabel>@Tenant.IsActivated</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Subscription id</FluentLabel>
+                <div>
+                    <FluentLabel>@Tenant.SubscriptionId</FluentLabel>
+                </div>
+            </div>
+        </div>
+    }
+</div>

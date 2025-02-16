@@ -1,0 +1,31 @@
+﻿@inherits Basepage
+
+@page "/subscription"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Authorizations
+@using UbikLink.Security.UI.Client.Components.Subscription
+
+<PageTitle>Manage subscription</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
+
+    @if (_isSubscriptionOwner)
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Selected subscription</h2>
+                <p class="tw-mb-2">You are the owner of this subscription.</p>
+                <p class="tw-italic">Find the configuration and the details below.</p>
+            </div>
+        </FluentStack>
+        <Subscription @rendermode="InteractiveAuto"></Subscription>
+    }
+    else
+    {
+        <NoRight Message="You are not the owner of the selected subscription"/>
+    }
+</UbikContentContainer>

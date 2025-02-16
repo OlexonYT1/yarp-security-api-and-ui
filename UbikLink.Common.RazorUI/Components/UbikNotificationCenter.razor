@@ -1,0 +1,29 @@
+﻿@using UbikLink.Common.RazorUI.Config;
+
+<FluentMessageBarProvider Section="@GeneralConfig.MESSAGES_POSITION_TOP" />
+
+<FluentButton Appearance="Appearance.Accent" Title="Notification center" OnClick="OpenNotificationCenterAsync">
+    @if (_messageService.Count(GeneralConfig.MESSAGES_POSITION_NOTIFICATION) > 0)
+    {
+        <FluentCounterBadge Count="@_messageService.Count(GeneralConfig.MESSAGES_POSITION_NOTIFICATION)"
+                            Max="9"
+                            ShowOverflow="true"
+                            BackgroundColor="@BadgeColor"
+                            Color="Color.FillInverse"
+                            Appearance="Appearance.Accent">
+            <ChildContent>
+                @NotificationIcon()
+            </ChildContent>
+        </FluentCounterBadge>
+    }
+    else
+    {
+        @NotificationIcon()
+    }
+</FluentButton>
+
+@code {
+    private RenderFragment NotificationIcon() =>
+        @<FluentIcon Value="@(new Icons.Regular.Size20.Alert())" Color="Color.Fill" Title="Notification center" />;
+}
+

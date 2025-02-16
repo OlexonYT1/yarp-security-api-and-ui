@@ -1,0 +1,155 @@
+﻿@implements IDialogContentComponent<ClientProblemDetails>
+
+@if (Content != null)
+{
+    <div class="tw-text-wrap tw-break-words">
+        <FluentDialogHeader ShowDismiss="true">
+            <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                <FluentIcon Color="Color.Error" Value="@(new Icons.Regular.Size24.ErrorCircle())" />
+                <FluentLabel Typo="Typography.PaneHeader" Color="Color.Error">
+                    @Dialog.Instance.Parameters.Title
+                </FluentLabel>
+            </FluentStack>
+        </FluentDialogHeader>
+        <FluentDialogBody>
+            <div class="tw-flex tw-flex-col">
+                <FluentCard class="tw-mb-2 tw-text-wrap tw-break-words">
+                    <div class="tw-mb-2 tw-flex tw-flex-col sm:tw-flex-row">
+                        <div class="tw-mb-1 tw-w-20 tw-min-w-20 tw-font-bold sm:tw-mb-0">
+                            Title
+                        </div>
+                        <div>
+                            @Content.Title
+                        </div>
+                    </div>
+                    <div class="tw-mb-2 tw-flex tw-flex-col sm:tw-flex-row">
+                        <div class="tw-mb-1 tw-w-20 tw-min-w-20 tw-font-bold sm:tw-mb-0">
+                            Detail
+                        </div>
+                        <div>
+                            @Content.Detail
+                        </div>
+                    </div>
+                    <div class="tw-flex tw-flex-col sm:tw-flex-row">
+                        <div class="tw-mb-1 tw-w-20 tw-min-w-20 tw-font-bold sm:tw-mb-0">
+                            Status
+                        </div>
+                        <div>
+                            @Content.Status
+                        </div>
+                    </div>
+                </FluentCard>
+                @if (Content.Errors != null)
+                {
+                    <FluentCard class="tw-mb-2 tw-text-wrap tw-break-words">
+                        <div class="tw-flex tw-flex-col">
+                            <div class="tw-mb-1 tw-w-20 tw-min-w-20 tw-font-bold sm:tw-mb-0">
+                                Errors
+                            </div>
+                            <div class="tw-flex tw-flex-col">
+                                @foreach (var err in Content.Errors)
+                                {
+                                    <div class="tw-mb-1 tw-flex tw-flex-col sm:tw-flex-row">
+                                        <div class="tw-w-20 tw-min-w-20">Code</div>
+                                        <div class="tw-text-wrap tw-break-words">@err.ErrorCode</div>
+                                    </div>
+                                    <div class="tw-mb-1 tw-flex tw-flex-col sm:tw-flex-row">
+                                        <div class="tw-w-20 tw-min-w-20">Msg</div>
+                                        <div class="tw-text-wrap tw-break-words">@err.ErrorFriendlyMessage</div>
+                                    </div>
+                                    @if (err.FieldsValuesInError != null)
+                                    {
+                                        <div class="tw-flex tw-flex-col sm:tw-flex-row">
+                                            <div class="tw-w-20 tw-min-w-20">Values</div>
+                                            <div class="tw-flex tw-flex-col">
+                                                @foreach (var fieldVal in err.FieldsValuesInError)
+                                                {
+                                                    <div class="tw-text-wrap tw-break-words">@fieldVal.Key - @fieldVal.Value</div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </FluentCard>
+                }
+                @if (Content.ValidationErrors != null)
+                {
+                    <FluentCard class="tw-mb-2 tw-text-wrap tw-break-words">
+                        <div class="tw-flex tw-flex-col">
+                            <div class="tw-mb-1 tw-w-20 tw-font-bold sm:tw-mb-0">
+                                Errors
+                            </div>
+                            <div class="tw-flex tw-flex-col">
+                                @foreach (var err in Content.ValidationErrors)
+                                {
+                                    <div class="tw-mb-1 tw-flex tw-flex-col sm:tw-flex-row">
+                                        <div class="tw-w-20 tw-min-w-20">@err.Key</div>
+                                        @foreach (var val in err.Value)
+                                        {
+                                            <div class="tw-text-wrap tw-break-words">@val</div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </FluentCard>
+                }
+                <FluentAccordion>
+                    <FluentAccordionItem Class="tw-text-wrap tw-break-words" Heading="Debug info" @bind-Expanded="@accordionOpen">
+                        <div class="tw-mb-2 tw-flex tw-flex-col">
+                            <div class="tw-mb-1 tw-font-bold sm:tw-mb-0">
+                                Type
+                            </div>
+                            <div>
+                                <FluentAnchor Href="@Content.Type" Appearance="Appearance.Hypertext">@Content.Type</FluentAnchor>
+                            </div>
+                        </div>
+                        <div class="tw-mb-2 tw-flex tw-flex-col">
+                            <div class="tw-mb-1 tw-font-bold sm:tw-mb-0">
+                                TraceId
+                            </div>
+                            <div class="tw-whitespace-normal tw-break-words">
+                                @Content.TraceId
+                            </div>
+                        </div>
+                        <div class="tw-flex tw-flex-col">
+                            <div class="tw-mb-1 tw-font-bold sm:tw-mb-0">
+                                RequestId
+                            </div>
+                            <div>
+                                @Content.RequestId
+                            </div>
+                        </div>
+                    </FluentAccordionItem>
+                </FluentAccordion>
+            </div>
+        </FluentDialogBody>
+        <FluentDialogFooter>
+            <FluentButton Appearance="Appearance.Neutral" OnClick="@CloseAsync">Cancel</FluentButton>
+        </FluentDialogFooter>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public ClientProblemDetails Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    private bool accordionOpen = false;
+
+    private async Task CloseAsync()
+    {
+        await Dialog.CloseAsync();
+    }
+
+    private void ToggleAccordion()
+    {
+        accordionOpen = !accordionOpen;
+    }
+
+}

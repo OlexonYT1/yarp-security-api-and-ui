@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>bdd43e4d-527f-447d-b838-180ce5a21add</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.Azure.Redis" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.Azure.ServiceBus" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.0.0-preview.5.24551.3" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UbikLink.Proxy\UbikLink.Proxy.csproj" />
+    <ProjectReference Include="..\UbikLink.Security.Api\UbikLink.Security.Api.csproj" />
+    <ProjectReference Include="..\UbikLink.Security.UI\UbikLink.Security.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Realm\ubik-realm.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

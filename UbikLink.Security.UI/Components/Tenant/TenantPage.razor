@@ -1,0 +1,30 @@
+﻿@inherits Basepage
+
+@page "/tenant"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Tenant
+
+<PageTitle>Manage my tenant</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
+
+    @if (_isTenantManager)
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Selected tenant</h2>
+                <p class="tw-mb-2">You are the manager of this tenant.</p>
+                <p class="tw-italic">Find the configuration below.</p>
+            </div>
+        </FluentStack>
+        <Tenant @rendermode="InteractiveAuto"></Tenant>
+    }
+    else
+    {
+        <NoRight Message="You are not the manager of the selected tenant." />
+    }
+</UbikContentContainer>

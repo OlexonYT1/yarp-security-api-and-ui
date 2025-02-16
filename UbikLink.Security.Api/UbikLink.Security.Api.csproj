@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0244abfb-62bd-4629-9008-c3d642b9d7a2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\Authorizations\Errors\**" />
+    <Compile Remove="Features\Tenants\Errors\**" />
+    <Compile Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <Content Remove="Features\Authorizations\Errors\**" />
+    <Content Remove="Features\Tenants\Errors\**" />
+    <Content Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <EmbeddedResource Remove="Features\Authorizations\Errors\**" />
+    <EmbeddedResource Remove="Features\Tenants\Errors\**" />
+    <EmbeddedResource Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <None Remove="Features\Authorizations\Errors\**" />
+    <None Remove="Features\Tenants\Errors\**" />
+    <None Remove="Features\Tenants\Queries\GetAllTenants\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UbikLink.Common\UbikLink.Common.csproj" />
+    <ProjectReference Include="..\UbikLink.Security.Contracts\UbikLink.Security.Contracts.csproj" />
+    <ProjectReference Include="..\UbikLink.ServiceDefaults\UbikLink.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Users\Commands\AddUserForAdmin\" />
+    <Folder Include="Features\Users\Consumers\" />
+  </ItemGroup>
+
+</Project>

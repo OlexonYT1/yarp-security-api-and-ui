@@ -1,0 +1,32 @@
+﻿@inherits Basepage
+
+@page "/authorizations/add"
+
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Authorizations
+@using Common.RazorUI.Config;
+@using UbikLink.Common.RazorUI.Authorize;
+
+<PageTitle>Add a new authorization</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="true" CloseUrl="authorizations?state=true" />
+    @if (IsMegaAdmin())
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-4">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Add a new authorization</h2>
+                <p class="tw-mb-2">Create a new authorization that can be attached to several "roles" or can be used directly for controlling users accesses (Yarp and client apps).</p>
+                <p class="tw-italic">You are free to choose your own naming convention.</p>
+            </div>
+        </FluentStack>
+
+        <AddAuthorization @rendermode="InteractiveAuto"></AddAuthorization>
+    }
+    else
+    {
+        <NoRight />
+    }
+
+</UbikContentContainer>
+

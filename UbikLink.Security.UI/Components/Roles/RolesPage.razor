@@ -1,0 +1,21 @@
+﻿@inherits Basepage
+@page "/roles"
+
+@using UbikLink.Common.RazorUI.Authorize;
+@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Security.UI.Client.Components.Roles;
+
+<PageTitle>Manage roles</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
+
+    @if (IsMegaAdmin())
+    {
+        <Roles @rendermode="InteractiveAuto"></Roles>
+    }
+    else
+    {
+        <NoRight />
+    }
+</UbikContentContainer>

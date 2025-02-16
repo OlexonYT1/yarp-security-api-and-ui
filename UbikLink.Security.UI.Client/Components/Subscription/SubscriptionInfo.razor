@@ -1,0 +1,45 @@
+﻿<div class="@(IsMainLoading?"tw-hidden":"tw-block") tw-flex tw-flex-col md:tw-flex-row">
+    @if (Subscription != null)
+    {
+        <div class="tw-flex tw-flex-col">
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Id</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.Id</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Label</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.Label</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Max users allowed</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.MaxUsers</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Max tenants allowed</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.MaxTenants</FluentLabel>
+                </div>
+            </div>
+        </div>
+        <div class="tw-flex tw-flex-col md:tw-ms-20 lg:tw-ms-80">
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Is active</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.IsActive</FluentLabel>
+                </div>
+            </div>
+            <div class="tw-mb-2 tw-flex tw-flex-col">
+                <FluentLabel>Plan</FluentLabel>
+                <div>
+                    <FluentLabel>@Subscription.PlanName</FluentLabel>
+                </div>
+            </div>
+        </div>
+    }
+</div>

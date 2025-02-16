@@ -1,0 +1,108 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components;
+@using UbikLink.Security.Contracts.Subscriptions.Results
+@using UbikLink.Security.Contracts.Tenants.Results
+
+<ErrorBoundary>
+    <ChildContent>
+        <UbikContentGridTopPanel>
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentStack Orientation="Orientation.Vertical" Class="tw-mt-3">
+                    <div>
+                        <h2 class="tw-text-2xl tw-font-bold">Settings</h2>
+                        <p class="tw-mb-2">Select your active subscription and your active tenant.</p>
+                    </div>
+                </FluentStack>
+            </FluentStack>
+            @if (_subscriptions != null && _subscriptions.Count > 0)
+            {
+                <UbikFluentToolbar>
+                    <FluentOverflowItem>
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                                      Disabled="@(!RendererInfo.IsInteractive)"
+                                      OnClick="LoadAndSetDataAsync">Refresh</FluentButton>
+                    </FluentOverflowItem>
+                </UbikFluentToolbar>
+            }
+        </UbikContentGridTopPanel>
+
+        @if (_subscriptions != null && _tenants != null)
+        {
+            if (_subscriptions.Count > 0)
+            {
+                <FluentEditForm FormName="edit_settings" Model="@SettingsUiObj" id="edit_settings" OnValidSubmit="HandleValidSubmitAsync">
+                    <div class="tw-mb-3 tw-h-auto tw-min-h-[250px] tw-overflow-auto">
+                        <div class="tw-flex tw-w-full tw-flex-col">
+
+                            <DataAnnotationsValidator />
+                            <div class="tw-mb-2 tw-w-[320px] max-[360px]:tw-w-[260px]">
+                                <FluentSelect TOption="SubscriptionStandardResult"
+                                              Label="Selected subscription"
+                                              Items="@_subscriptions"
+                                              Id="subscription-listbox"
+                                              Width="100%"
+                                              Height="250px"
+                                              Placeholder="Make a selection..."
+                                              OptionValue="@(p => p.Id.ToString())"
+                                              OptionText="@(p => p.Id.ToString())"
+                                              SelectedOptionChanged="OnSubscriptionChangedAsync"
+                                              @bind-Value="@SettingsUiObj.SelectedSubscriptionId" />
+                            </div>
+                            <div>
+                                @if (TenantsForSub != null && TenantsForSub.Count() > 0)
+                                {
+                                    <div class="tw-flex tw-flex-col lg:tw-items-end lg:tw-flex-row">
+                                        <div class="tw-w-[320px] max-[360px]:tw-w-[260px]">
+                                            <FluentSelect TOption="TenantStandardResult"
+                                                          Label="Selected tenant"
+                                                          Items="@TenantsForSub"
+                                                          Id="Tenant-listbox"
+                                                          Width="100%"
+                                                          Height="250px"
+                                                          Placeholder="Make a selection..."
+                                                          OptionValue="@(p => p.Id.ToString())"
+                                                          OptionText="@(p => p.Id.ToString())"
+                                                          @bind-Value="@SettingsUiObj.SelectedTenantId"
+                                                          @bind-SelectedOption="@_selectedTenant" />
+
+                                        </div>
+                                        <div Class="tw-mt-1 lg:tw-mt-0 lg:tw-ms-3">
+                                            <FluentLabel Color="Color.Success">@_selectedTenant?.Label</FluentLabel>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (!_isLoading)
+                                    {
+                                        <UbikWarningCard FirstMsg="You don't have any tenant available for this subscription."
+                                                         SecondMsg="Contact your admin, to have rights on the tenant(s).">
+                                        </UbikWarningCard>
+                                    }
+                                }
+                            </div>
+                            <FluentValidationSummary class="tw-mt-6">
+                            </FluentValidationSummary>
+                        </div>
+                    </div>
+                    <UbikContentBottom>
+                        <UbikFormBottomActions FormId="edit_settings" IsSavingInProgress="_isSaving" OnClose="LoadAndSetDataAsync" />
+                    </UbikContentBottom>
+                </FluentEditForm>
+            }
+            else
+            {
+                if (!_isLoading)
+                {
+                    <UbikWarningCard FirstMsg="You don't have any subscription linked to your account."
+                                     SecondMsg="Contact your admin, or register to a subscription.">
+                    </UbikWarningCard>
+                }
+            }
+        }
+
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Settings module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

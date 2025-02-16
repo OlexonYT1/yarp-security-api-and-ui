@@ -1,0 +1,20 @@
+﻿<div class="tw-mb-2 tw-flex tw-w-full tw-flex-col tw-justify-between sm:tw-flex-row">
+    <div class="tw-mb-2 sm:tw-mb-0">
+        <FluentSearch AriaLabel="@PlaceHolder" @bind-Value="BoundSearchValue" Placeholder="@PlaceHolder" onkeydown="return (event.keyCode!=13);"></FluentSearch>
+    </div>
+    <div class="tw-flex tw-flex-row tw-items-center">
+        <div class="tw-me-2">
+            <FluentLabel>Items per page</FluentLabel>
+        </div>
+        <div>
+            <FluentSelect TOption="int"
+                          AriaLabel="Items per page"
+                          Items="@_itemsPerPages"
+                          TOption="Option<int>"
+                          OptionText="@(i => i.ToString())"
+                          OptionValue="@(i => i.ToString())"
+                          @bind-SelectedOption="BoundSelectedItemsPerPage"
+                          Width="65px" />
+        </div>
+    </div>
+</div>

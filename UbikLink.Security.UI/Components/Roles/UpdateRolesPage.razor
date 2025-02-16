@@ -1,0 +1,27 @@
+﻿@inherits Basepage
+@page "/roles/{Id:guid}"
+
+@using UbikLink.Common.RazorUI.Authorize
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Roles
+
+<PageTitle>Edit role</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" CloseUrl="roles?state=true" WithClose="true" />
+
+    @if (IsMegaAdmin())
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-4">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Edit a role</h2>
+                <p class="tw-mb-2">Edit role and attach the authorizations.</p>
+            </div>
+        </FluentStack>
+        <UpdateRole @rendermode="InteractiveAuto" Id="Id"></UpdateRole>
+    }
+    else
+    {
+        <NoRight />
+    }
+    </UbikContentContainer>

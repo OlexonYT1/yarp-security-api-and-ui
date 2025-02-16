@@ -1,0 +1,30 @@
+﻿@inherits Basepage
+
+@page "/roles/add"
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Roles
+@using Common.RazorUI.Config;
+@using UbikLink.Common.RazorUI.Authorize;
+
+<PageTitle>Add a new role</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="true" CloseUrl="roles?state=true" />
+    @if (IsMegaAdmin())
+    {
+        <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-4">
+            <div>
+                <h2 class="tw-text-2xl tw-font-bold">Add a new role</h2>
+                <p class="tw-mb-2">Create a new role and attach the authorizations.</p>
+            </div>
+        </FluentStack>
+
+        <AddRole @rendermode="InteractiveAuto"></AddRole>
+    }
+    else
+    {
+        <NoRight Message="You are not a megadmin, cannot access this role configuration page." />
+    }
+
+</UbikContentContainer>
+

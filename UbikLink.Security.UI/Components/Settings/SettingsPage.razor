@@ -1,0 +1,13 @@
+﻿@inherits Basepage
+@using UbikLink.Common.RazorUI.Components
+@using UbikLink.Security.UI.Client.Components.Authorizations
+@using UbikLink.Security.UI.Client.Components.Settings
+
+@page "/settings"
+
+<PageTitle>Manage your settings</PageTitle>
+
+<UbikContentContainer>
+    <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
+    <Settings @rendermode="InteractiveAuto"></Settings>
+</UbikContentContainer>

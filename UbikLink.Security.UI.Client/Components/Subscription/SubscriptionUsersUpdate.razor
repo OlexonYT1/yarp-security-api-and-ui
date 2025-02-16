@@ -1,0 +1,61 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components;
+<ErrorBoundary>
+    <ChildContent>
+        <UbikFluentToolbar>
+            <FluentOverflowItem>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                              Disabled="@(!RendererInfo.IsInteractive)"
+                              OnClick="LoadOrRefreshDataAsync"
+                              Loading="@_isSaving">Refresh</FluentButton>
+            </FluentOverflowItem>
+        </UbikFluentToolbar>
+        <EditForm Model="Edit" id="edit_sub_user" OnValidSubmit="HandleSubmitAsync" novalidate>
+            <DataAnnotationsValidator />
+            <div class="tw-mb-3 tw-h-auto tw-min-h-[250px] tw-overflow-auto">
+                <div class="tw-flex tw-w-full tw-flex-col">
+                    <div class="tw-mb-4 tw-mt-6 tw-flex tw-w-[250px] tw-flex-col">
+                        <span>Id</span>
+                        <span class="tw-text-xs">@Edit.Id</span>
+                    </div>
+                    <div class="tw-mb-4">
+                        <FluentSwitch @bind-Value="Edit.IsOwner" Label="Is owner" AriaLabel="Is owner"></FluentSwitch>
+                    </div>
+                    <div class="tw-mb-4 tw-flex tw-w-[250px] tw-flex-col">
+                        <span>Email</span>
+                        <span>@Edit.Email</span>
+                    </div>
+                    <div class="tw-mb-4 tw-w-[250px]">
+                        <FluentTextField AriaLabel="Firstname"
+                                         Style="width:100%;"
+                                         Required="true"
+                                         @bind-Value="Edit.Firstname"
+                                         MaxLength="100" Label="Firstname">
+                        </FluentTextField>
+                        <FluentValidationMessage For="@(() => Edit.Firstname)" />
+                    </div>
+                    <div class="tw-mb-4 tw-w-[250px]">
+                        <FluentTextField AriaLabel="Lastanme"
+                                         Style="width:100%;"
+                                         Required="true"
+                                         @bind-Value="Edit.Lastname"
+                                         MaxLength="100" Label="Lastname">
+                        </FluentTextField>
+                        <FluentValidationMessage For="@(() => Edit.Lastname)" />
+                    </div>
+                    <div class="tw-mb-2">
+                        <FluentSwitch @bind-Value="Edit.IsActivated" Label="Active" AriaLabel="Active"></FluentSwitch>
+                    </div>
+                </div>
+            </div>
+            <FluentValidationSummary class="tw-mt-6">
+            </FluentValidationSummary>
+            <UbikContentBottom>
+                <UbikFormBottomActions FormId="edit_sub_user" IsSavingInProgress="_isSaving" OnClose="Close" />
+            </UbikContentBottom>
+        </EditForm>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Edit user module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

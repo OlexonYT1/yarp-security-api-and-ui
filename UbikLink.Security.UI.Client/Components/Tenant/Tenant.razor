@@ -1,0 +1,43 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components;
+
+<ErrorBoundary>
+    <ChildContent>
+        <UbikFluentToolbar>
+            <FluentOverflowItem>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                              Disabled="@(!RendererInfo.IsInteractive)"
+                              OnClick="LoadAndSetDataAsync">Refresh</FluentButton>
+            </FluentOverflowItem>
+        </UbikFluentToolbar>
+
+        <div class="tw-mb-3 tw-w-full">
+            <div class="tw-w-min-[620px]">
+
+                <FluentAccordion Class="tw-mb-5 tw-w-full" ExpandMode="AccordionExpandMode.Multi">
+                    <FluentAccordionItem Heading="Tenant info" Expanded="true">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.Info())" Color="@Color.Neutral" Slot="start" />
+                        <div class="tw-min-h-[200px]">
+                            <UbikLoading IsLoading="_isLoading"></UbikLoading>
+                            <TenantInfo IsMainLoading="_isLoading" Tenant="_selectedTenant"></TenantInfo>
+                        </div>
+                    </FluentAccordionItem>
+                    <FluentAccordionItem Class="tw-pt-0" Heading="Users" Expanded="true">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.People())" Color="@Color.Neutral" Slot="start" />
+                        <div class="tw-min-h-[200px]">
+                            <TenantUsers IsMainLoading="_isLoading"
+                                         Users="_tenantUsers"
+                                         AvailableRoles="_roles?.ToDictionary(x=>x.Id,x=>x)">
+                            </TenantUsers>
+                        </div>
+                    </FluentAccordionItem>
+
+                </FluentAccordion>
+                <div></div>
+            </div>
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Tenant module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>

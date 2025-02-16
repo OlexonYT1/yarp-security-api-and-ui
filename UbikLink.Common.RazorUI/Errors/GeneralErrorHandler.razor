@@ -1,0 +1,35 @@
+﻿@inject NavigationManager NavigationManager
+<div>
+    <FluentCard>
+        <FluentStack HorizontalAlignment="HorizontalAlignment.Start"
+                     VerticalAlignment="VerticalAlignment.Center"
+                     Orientation="Orientation.Horizontal">
+
+            <FluentIcon Class="tw-mr-2" Color="Color.Error"
+                        Value="@(new Icons.Regular.Size48.ErrorCircle())" />
+
+            <div class="tw-flex tw-flex-col">
+                <FluentLabel Color="Color.Error">
+                    A general error occurs, you can try to refresh..
+                </FluentLabel>
+                <FluentLabel>
+                    If the problem persists, please contact the support.
+                </FluentLabel>
+                <FluentLabel>
+                    @MainErrorMsg
+                </FluentLabel>
+            </div>
+            <div>
+                <FluentButton 
+                    IconStart="@(new Icons.Regular.Size24.ArrowClockwise())"
+                    OnClick="() => NavigationManager.NavigateTo(NavigationManager.Uri, true)">Refresh
+                </FluentButton>
+            </div>
+        </FluentStack>
+    </FluentCard>
+</div>
+
+@code {
+    [Parameter]
+    public string MainErrorMsg { get; set; } = "General module error";
+}

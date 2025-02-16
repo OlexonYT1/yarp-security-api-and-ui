@@ -1,0 +1,6 @@
+﻿@workspace  based on what I made for #file:'GetAllSubscriptionsMeHandler.cs'   and in #file:'GetAllSubscriptionsMeEndpoint.cs'     propose me an Endpoint #file:'GetAllTenantsMeEndpoint.cs'   and and Handler for #file:'GetAllTenantsMeHandler.cs'   . You need to propose new methods for this purpose in  #class:'UbikLink.Security.Api.Features.Tenants.Services.TenantQueryService'  too. Analyse the entire Api project to propose a solution that matches with what is already build.
+
+@workspace 
+In Integration testing project, create new test cases for #file:'BatchDeleteAuthorizationForAdminEndpoint.cs' use #file:'AddAuthorizationForAdminEndpoint_Tests.cs' as an example. Don't forget any test cases about the user token. and look in #file:'AuthorizationCommandService.cs' to know what case about sepcific #interface:'UbikLink.Common.Errors.IFeatureError' you need to made too.
+
+@workspace replace all fluent assertion assert by normal xunit assertions. don't halucinate and do extactly the same tests. I want to remove fluent assertion dependance. Don't do anything else, only the asser part.

@@ -1,0 +1,20 @@
+﻿<div>
+    <FluentCard>
+        <FluentStack HorizontalAlignment="HorizontalAlignment.Start"
+                     VerticalAlignment="VerticalAlignment.Center"
+                     Orientation="Orientation.Horizontal">
+
+            <FluentIcon Class="tw-mr-2" Color="Color.Warning"
+                        Value="@(new Icons.Regular.Size48.Warning())" />
+
+            <div class="tw-flex tw-flex-col">
+                <FluentLabel Color="Color.Warning">
+                    @FirstMsg
+                </FluentLabel>
+                <FluentLabel>
+                    @SecondMsg
+                </FluentLabel>
+            </div>
+        </FluentStack>
+    </FluentCard>
+</div>

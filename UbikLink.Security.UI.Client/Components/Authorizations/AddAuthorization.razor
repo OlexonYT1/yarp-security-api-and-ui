@@ -1,0 +1,33 @@
+﻿@using UbikLink.Common.RazorUI.Errors;
+@using UbikLink.Common.RazorUI.Components;
+
+<ErrorBoundary>
+    <ChildContent>
+        <EditForm Model="@Add" OnValidSubmit="HandleValidSubmitAsync" id="add_authorization" novalidate>
+            <DataAnnotationsValidator />
+
+            <div class="tw-mb-3 tw-h-auto tw-overflow-auto">
+                <div class="tw-flex tw-w-full tw-flex-col">
+                    <div class="tw-mb-2 tw-w-[250px]">
+                        <FluentTextField AriaLabel="Code" Style="width:100%;" Required="true" @bind-Value="Add.Code" MaxLength="50" Label="Code"></FluentTextField>
+                        <FluentValidationMessage For="@(() => Add.Code)" />
+                    </div>
+                    <div class="tw-w-full sm:tw-w-[450px]">
+                        <FluentTextArea AriaLabel="Description" Style="width:100%;" Rows="5" Cols="50" MaxLength="500" @bind-Value="Add.Description" Label="Description"></FluentTextArea>
+                        <FluentValidationMessage For="@(() => Add.Description)" />
+                    </div>
+                    <FluentValidationSummary class="tw-mt-6">
+                    </FluentValidationSummary>
+                </div>
+            </div>
+            <UbikContentBottom>
+                <UbikFormBottomActions FormId="add_authorization" OnClose="Close" IsSavingInProgress="_isLoading" />
+            </UbikContentBottom>
+        </EditForm>
+    </ChildContent>
+    <ErrorContent>
+        <GeneralErrorHandler MainErrorMsg="Authorization module in error"></GeneralErrorHandler>
+    </ErrorContent>
+</ErrorBoundary>
+
+
