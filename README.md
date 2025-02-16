@@ -41,7 +41,7 @@ User accounts for login in Security UI:
 
 ## Customization
 
-You can modify the setup based on your requirements. The project is configured with Keycloak and RabbitMQ (for revoke cache requests) but is compatible with other systems like Azure Service Bus (tested) and OAuth (tested). You can also remove some parts if needed (caching, service bus)
+You can modify the setup based on your requirements. The project is configured with Keycloak and RabbitMQ (for revoke cache requests) but is compatible with other systems like Azure Service Bus (tested) and 0Auth (tested). You can also remove some parts if needed (caching, service bus)
 
 ## Dependencies
 
