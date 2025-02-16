@@ -30,7 +30,7 @@ namespace UbikLink.Security.Api.Features.Users.Services
         {
             var con = _ctx.Database.GetDbConnection();
             var sql = $"""
-                       SELECT su.is_activated 
+                       SELECT su.is_activated, su.is_owner 
                        FROM subscriptions_users su
                        INNER JOIN users u ON su.user_id = u.id
                        INNER JOIN tenants t ON t.id = u.selected_tenant_id
@@ -39,7 +39,7 @@ namespace UbikLink.Security.Api.Features.Users.Services
                        AND su.subscription_id = t.subscription_id
                        """;
 
-            var active = await con.QuerySingleOrDefaultAsync<bool?>(sql, new { userId = user.Id, user.SelectedTenantId }) ?? false;
+            var activeAndOwner = await con.QuerySingleOrDefaultAsync<(bool? Active,bool? Owner)>(sql, new { userId = user.Id, user.SelectedTenantId });
 
             if (con.State == System.Data.ConnectionState.Open)
                 await con.CloseAsync();
@@ -48,7 +48,8 @@ namespace UbikLink.Security.Api.Features.Users.Services
             {
                 AuthId = user.AuthId,
                 Id = user.Id,
-                IsActiveInSelectedSubscription = active,
+                IsActiveInSelectedSubscription = activeAndOwner.Active == null ? false : (bool)activeAndOwner.Active,
+                IsSubOwnerOfTheSelectetdTenant = activeAndOwner.Owner == null ? false : (bool)activeAndOwner.Owner,
                 SelectedTenantId = user.SelectedTenantId,
                 Email = user.Email,
                 Firstname = user.Firstname,

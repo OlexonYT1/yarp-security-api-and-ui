@@ -99,13 +99,13 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("IsSubOwner", policy =>
         policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.SubscriptionOwner)))
     .AddPolicy("CanReadTenant", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read"], PermissionMode.Authorization)))
+        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read"], PermissionMode.Authorization, true)))
     .AddPolicy("CanReadTenantAndReadUser", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read"], PermissionMode.Authorization)))
+        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read"], PermissionMode.Authorization, true)))
     .AddPolicy("CanReadTenantAndWriteUserRole", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read", "tenant-user-role:write"], PermissionMode.Authorization)))
+        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read", "tenant-user-role:write"], PermissionMode.Authorization, true)))
     .AddPolicy("CanReadTenantAndReadTenantRoles", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "tenant-role:read"], PermissionMode.Authorization)));
+        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "tenant-role:read"], PermissionMode.Authorization, true)));
 
 
 //Proxy

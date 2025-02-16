@@ -19,6 +19,7 @@ namespace UbikLink.Security.Contracts.Users.Results
         public bool IsMegaAdmin { get; init; } = false;
         public IEnumerable<Guid> OwnerOfSubscriptionsIds { get; init; } = default!;
         public Guid? SelectedTenantId { get; init; }
+        public bool IsSubOwnerOfTheSelectetdTenant { get; init; } = false;
         public List<AuthorizationLightResult> SelectedTenantAuthorizations { get; init; } = [];
         public List<RoleLightResult> SelectedTenantRoles { get; init; } = [];
         public Guid Version { get; init; }

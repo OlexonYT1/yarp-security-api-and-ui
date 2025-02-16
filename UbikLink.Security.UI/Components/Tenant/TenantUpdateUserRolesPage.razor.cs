@@ -21,6 +21,8 @@ namespace UbikLink.Security.UI.Components.Tenant
             }
         }
 
+        private bool _isSubscriptionOwner = false;
+
         private static readonly List<BreadcrumbListItem> _breadcrumbItems = [
        new BreadcrumbListItem()
             {
@@ -39,6 +41,7 @@ namespace UbikLink.Security.UI.Components.Tenant
         {
             await base.OnInitializedAsync();
             _isTenantManager = CanAccessIfHasAuthorizations(["tenant:read", "user:read", "tenant-user-role:write", "tenant-role:read"]);
+            _isSubscriptionOwner = User?.IsSubOwnerOfTheSelectetdTenant ?? false;
         }
     }
 }

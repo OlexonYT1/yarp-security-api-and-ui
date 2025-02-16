@@ -12,7 +12,7 @@
 <UbikContentContainer>
     <UbikFluentBreadcrumb Items="BreadcrumbItems" WithClose="false" />
 
-    @if (_isTenantManager)
+    @if (_isTenantManager || _isSubscriptionOwner)
     {
         <FluentStack Orientation="Orientation.Vertical" Class="tw-mb-2 tw-mt-3">
             <div>

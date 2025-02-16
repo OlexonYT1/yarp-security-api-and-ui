@@ -140,8 +140,6 @@ namespace UbikLink.IntegrationTests
                 //    port.Port = 8081;
                 //}
 
-
-
                 var containerLifetimeAnnotation = keycloak.Annotations
                 .OfType<ContainerLifetimeAnnotation>()
                 .FirstOrDefault();

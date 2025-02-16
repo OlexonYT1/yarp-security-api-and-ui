@@ -34,9 +34,6 @@ User accounts for login in Security UI:
 | adminuser | admin | can manage system roles and authorizations |
 | user1| user | manage subscription and tenant |
 
-Don't remove the "TenantManger" role on the user1, or detatch him from the subscription, or your will be locked out of your tenant.
-(implements your own better rules).
-
 3. Play and deep dive in the code...
 
 *If you want to run the integration test project, pls comment this line: 

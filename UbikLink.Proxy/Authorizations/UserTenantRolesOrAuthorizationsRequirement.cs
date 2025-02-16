@@ -10,10 +10,11 @@ namespace UbikLink.Proxy.Authorizations
         Authorization
     }
 
-    public class UserTenantRolesOrAuthorizationsRequirement(string[] values, PermissionMode mode) : IAuthorizationRequirement
+    public class UserTenantRolesOrAuthorizationsRequirement(string[] values, PermissionMode mode, bool isSubscriptionOwnerAllowed) : IAuthorizationRequirement
     {
         public string[] Values { get; set; } = values;
         public PermissionMode Mode { get; set; } = mode;
+        public bool IsSubscriptionOwnerAllowed { get; set; } = isSubscriptionOwnerAllowed;
     }
 
     public class UserRolesAuthorizationOkHandler(UserService userService)
@@ -44,14 +45,12 @@ namespace UbikLink.Proxy.Authorizations
                 return;
             }
 
-            //TODO: it's a security hole (need to check)
-            // Certain tenant authorizations don't need to be deleted or you will be locked out of a tenant...
-            //if (requirement.IsSubscriptionOwnerAllowed
-            //               && userInfo.OwnerOfSubscriptionsIds.Any())
-            //{
-            //    context.Succeed(requirement);
-            //    return;
-            //}
+             //TODO: check that
+            if (requirement.IsSubscriptionOwnerAllowed && userInfo.IsSubOwnerOfTheSelectetdTenant)
+            {
+                context.Succeed(requirement);
+                return;
+            }
 
             switch (requirement.Mode)
             {
