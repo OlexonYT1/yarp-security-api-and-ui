@@ -16,6 +16,7 @@ var messagebusConnectionString = builder.AddParameter("messaging-url", secret: t
 var rabbitUser = builder.AddParameter("rabbit-username", secret: true);
 var rabbitPassword = builder.AddParameter("rabbit-password", secret: true);
 var transportType = builder.AddParameter("transport-type", secret: false);
+var authTokenStoreKey = builder.AddParameter("auth-token-store-key", secret: true);
 
 //Postgres (local)
 var db = builder.AddPostgres("ubiklink-postgres", postgresUsername, postgresPassword)
@@ -95,6 +96,7 @@ builder.AddProject<Projects.UbikLink_Security_UI>("ubiklink-security-ui")
     .WithEnvironment("AuthConfig__TokenUrl", authTokenUrl)
     .WithEnvironment("AuthConfig__ClientId", securityClientAppId)
     .WithEnvironment("AuthConfig__ClientSecret", securityClientAppSecret)
+    .WithEnvironment("AuthConfig__AuthTokenStoreKey", securityClientAppSecret)
     .WithEnvironment("Messaging__Transport", transportType)
     .WithEnvironment("Messaging__RabbitUser", rabbitUser)
     .WithEnvironment("Messaging__RabbitPassword", rabbitPassword);

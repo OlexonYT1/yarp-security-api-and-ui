@@ -24,5 +24,6 @@ namespace UbikLink.Common.Auth
         public List<string> Scopes { get; set; } = default!;
         public bool AuthorizeBadCert { get; set; } = false;
         public string AuthTokenHttpClientName { get; set; } = "default";
+        public string AuthTokenStoreKey { get; set; } = "default";
     }
 }
