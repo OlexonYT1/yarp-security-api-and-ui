@@ -29,7 +29,7 @@ var db = builder.AddPostgres("ubiklink-postgres", postgresUsername, postgresPass
 var serviceBus = builder.AddConnectionString("messaging");
 
 //RabbitMQ (local)
-var rabbitmq = builder.AddRabbitMQ("ubiklink-rabbitmq", rabbitUser, rabbitPassword)
+var rabbitmq = builder.AddRabbitMQ("ubiklink-rabbitmq", rabbitUser, rabbitPassword, 58842)
     .WithManagementPlugin()
     .WithLifetime(ContainerLifetime.Persistent);
 
@@ -42,7 +42,7 @@ var keycloak = builder.AddKeycloak("keycloak", 8080)
 //var cache = builder.AddAzureRedis("cache");
 
 //Redis cache (local)
-var cache = builder.AddRedis("cache")
+var cache = builder.AddRedis("cache", 6379)
     .WithLifetime(ContainerLifetime.Persistent);
 
 //Security API
@@ -100,5 +100,12 @@ builder.AddProject<Projects.UbikLink_Security_UI>("ubiklink-security-ui")
     .WithEnvironment("Messaging__Transport", transportType)
     .WithEnvironment("Messaging__RabbitUser", rabbitUser)
     .WithEnvironment("Messaging__RabbitPassword", rabbitPassword);
+
+//Add npm sevltekit project (not work with fnm.... because of path)
+//builder.AddNpmApp("svelte-ui", "../svelte-link-ui","dev")
+//    .WithEnvironment("BROWSER", "none")
+//    .WithHttpEndpoint(env: "PORT")
+//    .WithExternalHttpEndpoints()
+//    .PublishAsDockerFile();
 
 await builder.Build().RunAsync();
