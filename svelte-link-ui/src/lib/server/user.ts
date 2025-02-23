@@ -10,7 +10,7 @@ export async function createUserInCache(user: UserMeResult, expires: Date): Prom
 		Math.floor((expires.getTime() - Date.now()) / 1000)
 	);
 
-	await redis.sadd(`jsapp-users-tenant:${user.selectedTenantId}`, `jsapp-user:${user.authId}`);
+	await redis.sadd(`jsapp-users-tenant-${user.selectedTenantId}`, `jsapp-user:${user.authId}`);
 	await redis.sadd(`jsapp-users`, `jsapp-user:${user.authId}`);
 	return user;
 }
@@ -54,7 +54,7 @@ export async function getUserFromCache(authId: string): Promise<UserMeResult | n
 export async function removeAllUsersFromCacheByTenantId(tenantId: string): Promise<void> {
 	console.log('Cleaning cache for tenant', tenantId);
 	// Get all user keys associated with the tenantId
-	const userKeys = await redis.smembers(`jsapp-users-tenant:${tenantId}`);
+	const userKeys = await redis.smembers(`jsapp-users-tenant-${tenantId}`);
 
 	// Use a pipeline to execute multiple commands in a single round-trip
 	const pipeline = redis.pipeline();
@@ -66,7 +66,7 @@ export async function removeAllUsersFromCacheByTenantId(tenantId: string): Promi
 	}
 
 	// Remove the tenant's user set
-	pipeline.del(`jsapp-users-tenant:${tenantId}`);
+	pipeline.del(`jsapp-users-tenant-${tenantId}`);
 
 	// Execute the pipeline
 	await pipeline.exec();
@@ -81,7 +81,7 @@ export async function removeUserFromCache(
 	await redis.del(`jsapp-user:${userAuthId}`);
 	await redis.srem(`jsapp-users`, `jsapp-user:${userAuthId}`);
 	if (tenantId !== null) {
-		await redis.srem(`jsapp-users-tenant:${tenantId}`, `jsapp-user:${userAuthId}`);
+		await redis.srem(`jsapp-users-tenant-${tenantId}`, `jsapp-user:${userAuthId}`);
 	}
 	console.log('User removed from cache', userAuthId);
 }
@@ -95,7 +95,7 @@ export async function removeAllUsersFromCache(): Promise<void> {
 	// Define patterns for keys and sets to be removed
 	const patterns = [
 		'jsapp-users', // Global user set
-		'jsapp-users-tenant:*', // Tenant user sets
+		'jsapp-users-tenant-*', // Tenant user sets
 		'jsapp-user:*' // User keys
 	];
 
