@@ -8,6 +8,12 @@
 - Optional security UI for quick bootstrapping (Blazor, and components in auto mode).
 - **Designed to manage subscriptions and multi-tenants.**
 
+## News
+
+SvelteKit Frontend added. (not working in Aspire with fnm), so:
+
+`npm install, npm run dev in svelte-link-ui folder`
+
 ## Goal
 
 This project allows you to choose any OAuth provider and remain independent in terms of your security design. You can add any frontend (Blazor, Next.js, SvelteKit) or backend APIs in front or behind this security layer. For a full SPA, you can modify Yarp to be a full BFF (Backend for Frontend).
