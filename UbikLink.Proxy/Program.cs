@@ -92,20 +92,48 @@ builder.Services.AddScoped<IAuthorizationHandler, UserRolesAuthorizationOkHandle
 
 //Available policies (can be written in an extension)
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("IsUser", policy =>
-        policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.User)))
-    .AddPolicy("IsMegaAdmin", policy =>
-        policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.MegaAdmin)))
-    .AddPolicy("IsSubOwner", policy =>
-        policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.SubscriptionOwner)))
-    .AddPolicy("CanReadTenant", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read"], PermissionMode.Authorization, true)))
-    .AddPolicy("CanReadTenantAndReadUser", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read"], PermissionMode.Authorization, true)))
-    .AddPolicy("CanReadTenantAndWriteUserRole", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read", "tenant-user-role:write"], PermissionMode.Authorization, true)))
-    .AddPolicy("CanReadTenantAndReadTenantRoles", policy =>
-        policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "tenant-role:read"], PermissionMode.Authorization, true)));
+  .AddPolicy("IsUser", policy =>
+  {
+      policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.User));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("IsMegaAdmin", policy =>
+  {
+      policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.MegaAdmin));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("IsSubOwner", policy =>
+  {
+      policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.SubscriptionOwner));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("CanReadTenant", policy =>
+  {
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read" }, PermissionMode.Authorization, true));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("CanReadTenantAndReadUser", policy =>
+  {
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "user:read" }, PermissionMode.Authorization, true));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("CanReadTenantAndWriteUserRole", policy =>
+  {
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "user:read", "tenant-user-role:write" }, PermissionMode.Authorization, true));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
+  .AddPolicy("CanReadTenantAndReadTenantRoles", policy =>
+  {
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "tenant-role:read" }, PermissionMode.Authorization, true));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  });
 
 
 //Proxy
