@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Keycloak.Authentication" Version="9.0.0-preview.5.24551.3" />
-    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.0.0" />
+    <PackageReference Include="Aspire.Keycloak.Authentication" Version="9.1.0-preview.1.25121.10" />
+    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.2.0-preview.1.25105.6" />
-    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="9.1.0" />
     <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
   </ItemGroup>
 
