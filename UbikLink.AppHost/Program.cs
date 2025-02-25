@@ -17,6 +17,7 @@ var rabbitUser = builder.AddParameter("rabbit-username", secret: true);
 var rabbitPassword = builder.AddParameter("rabbit-password", secret: true);
 var transportType = builder.AddParameter("transport-type", secret: false);
 var authTokenStoreKey = builder.AddParameter("auth-token-store-key", secret: true);
+var authRegisterAuthorizationKey = builder.AddParameter("auth-register-authorization-key", secret: true);
 
 //Postgres (local)
 var db = builder.AddPostgres("ubiklink-postgres", postgresUsername, postgresPassword)
@@ -53,6 +54,7 @@ var securityApi = builder.AddProject<Projects.UbikLink_Security_Api>("ubiklink-s
     .WithEnvironment("Messaging__Transport", transportType)
     .WithEnvironment("Messaging__RabbitUser", rabbitUser)
     .WithEnvironment("Messaging__RabbitPassword", rabbitPassword)
+    .WithEnvironment("AuthRegister__Key", authRegisterAuthorizationKey)
     .WithReference(securityDB)
     .WaitFor(securityDB)
     .WithReference(rabbitmq)

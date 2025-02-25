@@ -1,15 +1,42 @@
-﻿using System.Runtime.CompilerServices;
+﻿using MassTransit;
+using System.Runtime.CompilerServices;
 using UbikLink.Security.Api.Data.Models;
 using UbikLink.Security.Api.Features.Subscriptions.Services.Poco;
 using UbikLink.Security.Api.Features.Tenants.Services.Poco;
 using UbikLink.Security.Api.Features.Users.Services.Poco;
 using UbikLink.Security.Contracts.Subscriptions.Commands;
+using UbikLink.Security.Contracts.Users.Commands;
 using UbikLink.Security.Contracts.Users.Results;
 
 namespace UbikLink.Security.Api.Mappers
 {
     public static class UserMappers
     {
+        public static UserModel MapToUser(this RegisterUserCommand command)
+        {
+            return new UserModel
+            {
+                Firstname = command.Firstname,
+                Lastname = command.Lastname,
+                Email = command.Email,
+                Id = NewId.NextGuid(),
+                AuthId = command.AuthId,
+            };
+        }
+
+        public static UserRegisterResult MapToUserRegisterResult(this UserModel model)
+        {
+            return new UserRegisterResult
+            {
+                Firstname = model.Firstname,
+                Lastname = model.Lastname,
+                Email = model.Email,
+                Id = model.Id,
+                AuthId = model.AuthId,
+                Version = model.Version
+            };
+        }
+
         public static UserProxyResult MapToUserProxyResult(this UserWithSubscriptionInfo user)
         {
             return new UserProxyResult

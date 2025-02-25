@@ -6,22 +6,6 @@ using UbikLink.Security.Api.Data.Models;
 
 namespace UbikLink.Security.Api.Data.Init
 {
-    //
-    //    Id = AdminUserId,
-    //AuthId = "auth0|67652ffac10d5b1a941c0eea",
-
-    //Id = UserId1,
-    //AuthId = "auth0|6765c1dfde196ffc614820c8",
-
-    //Id = UserId2,
-    //AuthId = "auth0|6765c2190005ba4d6fd129de",
-
-    //Id = UserId3,
-    //AuthId = "notinauth",
-
-    //Id = UserIdInactivated,
-    //AuthId = "auth0|67715a5d3994cfeace0465ce",
-
     public static class TestData
     {
         public static string AuthIdAdmin { get; } = "6c890000-5dd4-0015-be9a-08dd4d05b0b6";

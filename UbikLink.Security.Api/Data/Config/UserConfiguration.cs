@@ -44,7 +44,7 @@ namespace UbikLink.Security.Api.Data.Config
             });
 
             builder.HasIndex(a => a.Email)
-                .IsUnique();
+                .IsUnique(false);
 
             builder.HasIndex(a => a.AuthId)
                 .IsUnique();

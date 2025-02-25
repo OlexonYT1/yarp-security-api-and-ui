@@ -92,6 +92,12 @@ builder.Services.AddScoped<IAuthorizationHandler, UserRolesAuthorizationOkHandle
 
 //Available policies (can be written in an extension)
 builder.Services.AddAuthorizationBuilder()
+  .AddPolicy("OnlyAuth", policy =>
+  {
+      policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.OnlyAuthenticated));
+      policy.RequireAuthenticatedUser();
+      policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+  })
   .AddPolicy("IsUser", policy =>
   {
       policy.Requirements.Add(new UserInfoOnlyRequirement(RoleRequirement.User));

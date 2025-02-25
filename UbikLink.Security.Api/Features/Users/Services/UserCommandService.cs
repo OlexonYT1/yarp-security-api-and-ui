@@ -15,6 +15,15 @@ namespace UbikLink.Security.Api.Features.Users.Services
         private readonly SecurityDbContext _ctx = ctx;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
+        public async Task<UserModel> AddUserInDbAsync(UserModel current)
+        {
+            _ctx.Users.Add(current);
+            _ctx.SetAuditAndSpecialFields();
+            await _ctx.SaveChangesAsync();
+
+            return current;
+        }
+
         public async Task<Either<IFeatureError, UserModel>> SaveAndPublishNewSelectedTenantForUser(UserModel currentUser, Guid tenantId)
         {
             currentUser.SelectedTenantId = tenantId;

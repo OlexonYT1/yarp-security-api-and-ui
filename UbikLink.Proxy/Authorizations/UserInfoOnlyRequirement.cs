@@ -8,7 +8,8 @@ namespace UbikLink.Proxy.Authorizations
     {
         MegaAdmin,
         SubscriptionOwner,
-        User
+        User,
+        OnlyAuthenticated
     }
 
     public class UserInfoOnlyRequirement(RoleRequirement roleType) : IAuthorizationRequirement
@@ -27,6 +28,10 @@ namespace UbikLink.Proxy.Authorizations
 
                 switch (requirement.RoleType)
                 {
+                    case RoleRequirement.OnlyAuthenticated:
+                        context.Succeed(requirement);
+                        return;
+
                     case RoleRequirement.MegaAdmin:
                         if (userInfo != null 
                             && userInfo.IsMegaAdmin)

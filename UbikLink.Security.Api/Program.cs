@@ -40,6 +40,9 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 builder.Services.Configure<ProxyToken>(
     builder.Configuration.GetSection(ProxyToken.Position));
 
+builder.Services.Configure<AuthRegisterAuthKey>(
+    builder.Configuration.GetSection(AuthRegisterAuthKey.Position));
+
 //MessageBroker 
 var transport = builder.Configuration.GetValue<string>("Messaging:Transport") == "rabbit"
     ? TransportType.RabbitMQ
@@ -140,10 +143,15 @@ app.UseWhen(
         && !httpContext.Request.Path.Value!.Contains("/admin/")
         && !httpContext.Request.Path.Value!.Contains("/me/")
         && !httpContext.Request.Path.Value!.Contains("/proxy/")
-        && !httpContext.Request.Path.Value!.Contains("/subowner/"),
+        && !httpContext.Request.Path.Value!.Contains("/subowner/")
+        && !httpContext.Request.Path.Value!.Contains("/users/register"), //no middleware on this entry point
+
 
     subApp => subApp.UseMiddleware<UserInHeaderMiddleware>()
 );
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<SecurityDbContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -151,12 +159,16 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference(_ => _.Servers = []);
 
     //Db created
-    using var scope = app.Services.CreateScope();
-
-    var db = scope.ServiceProvider.GetRequiredService<SecurityDbContext>();
     await db.Database.EnsureDeletedAsync();
     await db.Database.EnsureCreatedAsync();
     await TestData.LoadAsync(db);
+    await MandatoryData.LoadAsync(db);
 }
+else
+{
+    await MandatoryData.LoadAsync(db);
+}
+
+
 
 app.Run();

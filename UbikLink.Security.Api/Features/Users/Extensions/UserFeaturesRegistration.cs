@@ -2,6 +2,7 @@
 using UbikLink.Security.Api.Features.Tenants.Queries.GetAllTenantsForAdmin;
 using UbikLink.Security.Api.Features.Tenants.Queries.GetTenantForAdmin;
 using UbikLink.Security.Api.Features.Tenants.Services;
+using UbikLink.Security.Api.Features.Users.Commands.RegisterUser;
 using UbikLink.Security.Api.Features.Users.Commands.UpdateUserSettingsMe;
 using UbikLink.Security.Api.Features.Users.Queries.GetUserForProxy;
 using UbikLink.Security.Api.Features.Users.Queries.GetUserMe;
@@ -21,6 +22,9 @@ namespace UbikLink.Security.Api.Features.Users.Extensions
 
             services.AddScoped<UserQueryService>();
             services.AddScoped<UserCommandService>();
+
+            services.AddScoped<RegisterUserHandler>();
+            services.AddScoped<RegisterUserValidator>();
         }
     }
 }

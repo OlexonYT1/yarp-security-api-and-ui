@@ -25,5 +25,6 @@ namespace UbikLink.Common.Auth
         public bool AuthorizeBadCert { get; set; } = false;
         public string AuthTokenHttpClientName { get; set; } = "default";
         public string AuthTokenStoreKey { get; set; } = "default";
+        public string AuthRegisterAuthorizationKey { get; set; } = "default";
     }
 }
