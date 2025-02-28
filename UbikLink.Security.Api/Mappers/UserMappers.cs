@@ -46,14 +46,15 @@ namespace UbikLink.Security.Api.Mappers
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
                 Email = user.Email,
-                IsSubOwnerOfTheSelectetdTenant = user.IsSubOwnerOfTheSelectetdTenant,
+                IsSubOwnerOfTheSelectedTenant = user.IsSubOwnerOfTheSelectetdTenant,
                 IsActivatedInSelectedSubscription = user.IsActiveInSelectedSubscription,
                 IsMegaAdmin = user.IsMegaAdmin,
                 SelectedTenantId = user.SelectedTenantId,
                 OwnerOfSubscriptionsIds = user.OwnerOfSubscriptionsIds,
                 SelectedTenantAuthorizations = [.. user.SelectedTenantAuthorizations.MapToAuthorizationLightResults()],
                 SelectedTenantRoles = [.. user.SelectedTenantRoles.MapToRoleLightResults()],
-                Version = user.Version
+                Version = user.Version,
+                IsEmailVerified = user.IsEmailVerified
             };
         }
 
@@ -66,7 +67,7 @@ namespace UbikLink.Security.Api.Mappers
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
                 Email = user.Email,
-                IsSubOwnerOfTheSelectetdTenant = user.IsSubOwnerOfTheSelectetdTenant,
+                IsSubOwnerOfTheSelectedTenant = user.IsSubOwnerOfTheSelectetdTenant,
                 IsActivatedInSelectedSubscription = user.IsActiveInSelectedSubscription,
                 IsMegaAdmin = user.IsMegaAdmin,
                 SelectedTenantId = user.SelectedTenantId,
@@ -74,6 +75,7 @@ namespace UbikLink.Security.Api.Mappers
                 SelectedTenantAuthorizations = [.. user.SelectedTenantAuthorizations.MapToAuthorizationLightResults()],
                 SelectedTenantRoles = [.. user.SelectedTenantRoles.MapToRoleLightResults()],
                 Version = user.Version,
+                IsEmailVerified = user.IsEmailVerified
             };
         }
 

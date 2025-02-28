@@ -21,6 +21,9 @@ namespace UbikLink.Security.Api.Data.Config
                 .IsRequired()
                 .HasMaxLength(200);
 
+            builder.Property(a => a.ActivationCode)
+                .HasMaxLength(50);
+
             builder.Property(a => a.Version)
                 .IsConcurrencyToken();
 

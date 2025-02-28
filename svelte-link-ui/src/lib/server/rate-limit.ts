@@ -47,7 +47,7 @@ export class TokenBucket<_Key> {
 		return true;
 	}
 }
-interface Bucket {
+type Bucket = {
 	count: number;
 	refilledAt: number;
-}
+};

@@ -5,10 +5,8 @@
 </script>
 
 <svelte:head>
-	<title>Example secu</title>
+	<title>Ubik link</title>
 </svelte:head>
 
 <ModeWatcher />
-<div class="flex flex-col gap-2 p-4">
-	{@render children?.()}
-</div>
+{@render children?.()}

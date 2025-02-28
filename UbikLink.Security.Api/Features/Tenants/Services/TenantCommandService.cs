@@ -21,7 +21,7 @@ namespace UbikLink.Security.Api.Features.Tenants.Services
 
         public async Task<Either<IFeatureError, TenantModel>> AddTenantInDbAsync(TenantModel tenant)
         {
-            _ctx.Tenants.Add(tenant);
+            await _ctx.Tenants.AddAsync(tenant);
             _ctx.SetAuditAndSpecialFields();
             await _ctx.SaveChangesAsync();
 

@@ -11,15 +11,19 @@
     <Compile Remove="Features\Authorizations\Errors\**" />
     <Compile Remove="Features\Tenants\Errors\**" />
     <Compile Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <Compile Remove="Features\Users\Commands\AddUserForAdmin\**" />
     <Content Remove="Features\Authorizations\Errors\**" />
     <Content Remove="Features\Tenants\Errors\**" />
     <Content Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <Content Remove="Features\Users\Commands\AddUserForAdmin\**" />
     <EmbeddedResource Remove="Features\Authorizations\Errors\**" />
     <EmbeddedResource Remove="Features\Tenants\Errors\**" />
     <EmbeddedResource Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <EmbeddedResource Remove="Features\Users\Commands\AddUserForAdmin\**" />
     <None Remove="Features\Authorizations\Errors\**" />
     <None Remove="Features\Tenants\Errors\**" />
     <None Remove="Features\Tenants\Queries\GetAllTenants\**" />
+    <None Remove="Features\Users\Commands\AddUserForAdmin\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Users\Commands\AddUserForAdmin\" />
     <Folder Include="Features\Users\Consumers\" />
   </ItemGroup>
 

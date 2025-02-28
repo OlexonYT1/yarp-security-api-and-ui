@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { fullLogout } from '$lib/server/current-user';
-import type { UserMeResult } from '$lib/server/user';
+import type { UserMeResult } from '$lib/types/user-types';
 
 import type { Actions, RequestEvent } from './$types';
 
@@ -17,5 +17,5 @@ export const actions: Actions = {
 async function action(event: RequestEvent) {
 	await fullLogout(event);
 
-	return redirect(302, '/login');
+	return redirect(302, '/login/auth');
 }

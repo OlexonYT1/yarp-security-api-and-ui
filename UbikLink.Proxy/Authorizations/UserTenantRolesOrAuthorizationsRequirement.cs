@@ -46,7 +46,7 @@ namespace UbikLink.Proxy.Authorizations
             }
 
              //TODO: check that
-            if (requirement.IsSubscriptionOwnerAllowed && userInfo.IsSubOwnerOfTheSelectetdTenant)
+            if (requirement.IsSubscriptionOwnerAllowed && userInfo.IsSubOwnerOfTheSelectedTenant)
             {
                 context.Succeed(requirement);
                 return;

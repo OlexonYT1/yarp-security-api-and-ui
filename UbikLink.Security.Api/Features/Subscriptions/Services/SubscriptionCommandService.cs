@@ -21,8 +21,8 @@ namespace UbikLink.Security.Api.Features.Subscriptions.Services
 
         public async Task<Either<IFeatureError, TenantWithLinkedUsers>> AddTenantWithLinkedUsersInDbAsync(TenantModel tenant, List<Guid> userIds)
         {
-            _ctx.Tenants.Add(tenant);
-            _ctx.TenantsUsers.AddRange(userIds.Select(userId => new TenantUserModel()
+            await _ctx.Tenants.AddAsync(tenant);
+            await _ctx.TenantsUsers.AddRangeAsync(userIds.Select(userId => new TenantUserModel()
             {
                 Id = NewId.NextGuid(),
                 TenantId = tenant.Id,

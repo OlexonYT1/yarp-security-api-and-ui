@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type {
+		UserMeResult,
+		AuthorizationLightResult,
+		RoleLightResult
+	} from '$lib/types/user-types';
 
 	import type { PageData } from './$types';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import ToggleTheme from '$lib/components/toggle-theme.svelte';
 
 	export let data: PageData;
-	const user = data.user;
+	const user = data.user as UserMeResult;
 </script>
 
 <div class="flex justify-between">
@@ -29,10 +34,14 @@
 	<li>Is Sub Owner Of The Selected Tenant: {user.isSubOwnerOfTheSelectedTenant ? 'Yes' : 'No'}</li>
 	<li>
 		Selected Tenant Authorizations: {user.selectedTenantAuthorizations
-			.map((auth) => auth.code)
+			.map((auth: AuthorizationLightResult) => auth.code)
 			.join(', ')}
 	</li>
-	<li>Selected Tenant Roles: {user.selectedTenantRoles.map((role) => role.code).join(', ')}</li>
+	<li>
+		Selected Tenant Roles: {user.selectedTenantRoles
+			.map((role: RoleLightResult) => role.code)
+			.join(', ')}
+	</li>
 	<li>Version: {user.version}</li>
 </ul>
 

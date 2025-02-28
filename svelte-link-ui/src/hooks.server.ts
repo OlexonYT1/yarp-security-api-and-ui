@@ -16,9 +16,10 @@ import {
 	removeAllUsersFromCache,
 	removeUserFromCache
 } from './lib/server/user';
+import type { UserMeResult } from '$lib/types/user-types';
 
 const bucket = new TokenBucket<string>(100, 1);
-const LOGIN_URL = '/login';
+const LOGIN_URL = '/login/auth';
 
 export const init: ServerInit = async () => {
 	// Register all the RabbitMQ stuff (for cache cleaning)
@@ -52,7 +53,7 @@ const rateLimitHandle: Handle = async ({ event, resolve }) => {
 };
 
 const authHandle: Handle = async ({ event, resolve }) => {
-	if (event.url.pathname.startsWith('/app')) {
+	if (event.url.pathname.startsWith('/app') || event.url.pathname.startsWith('/register')) {
 		const token = event.cookies.get('session');
 		if (!token) {
 			return redirectToLogin(event);
@@ -64,12 +65,22 @@ const authHandle: Handle = async ({ event, resolve }) => {
 		}
 
 		const backendToken = await getAuthToken(session.userId, session.expiresAt);
-		const user = backendToken ? await getUser(session.userId, backendToken.accessToken) : null;
+		const user: UserMeResult | null = backendToken
+			? await getUser(session.userId, backendToken.accessToken)
+			: null;
 
 		if (user) {
 			await setSessionTokenCookie(event, token, session.expiresAt);
 			event.locals.user = user;
 			event.locals.session = session;
+			if (event.url.pathname.startsWith('/app')) {
+				if (user.isEmailVerified === false) {
+					return new Response(null, {
+						status: 302,
+						headers: { location: '/register' }
+					});
+				}
+			}
 		} else {
 			await invalidateSession(session.id, session.userId);
 			await removeAuthTokenFromCache(session.userId);

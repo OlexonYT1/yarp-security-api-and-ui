@@ -1,6 +1,7 @@
 import { redis } from './redis';
 import { Guid } from 'guid-ts';
 import { BACKEND_PROXY_URL } from '$env/static/private';
+import type { UserMeResult } from '../types/user-types';
 
 export async function createUserInCache(user: UserMeResult, expires: Date): Promise<UserMeResult> {
 	await redis.set(
@@ -38,6 +39,27 @@ export async function getUser(authId: string, accessToken: string): Promise<User
 	await createUserInCache(userFromBackend, new Date(Date.now() + 3600 * 1000 * 24)); // Cache for 1 day
 
 	return userFromBackend;
+}
+
+export async function registerUser(
+	registerUser: RegisterUserCommand,
+	accessToken: string
+): Promise<UserRegisterResult | null> {
+	const response = await fetch(`${BACKEND_PROXY_URL}/security/api/v1/users/register`, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(registerUser)
+	});
+
+	if (!response.ok) {
+		return null;
+	}
+
+	const userRegisterResult: UserRegisterResult = await response.json();
+	return userRegisterResult;
 }
 
 export async function getUserFromCache(authId: string): Promise<UserMeResult | null> {
@@ -112,28 +134,43 @@ export async function removeAllUsersFromCache(): Promise<void> {
 	console.log('All cache entries and members cleaned');
 }
 
-export interface UserMeResult {
+export async function onboardMe(activationCode: string, accessToken: string): Promise<boolean> {
+	const onboardCommand: OnboardMeSimpleCommand = { activationCode };
+
+	const response = await fetch(`${BACKEND_PROXY_URL}/security/api/v1/me/onboarding`, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(onboardCommand)
+	});
+
+	if (!response.ok) {
+		return false;
+	}
+
+	return await response.json();
+}
+
+export type UserRegisterResult = {
 	id: Guid;
 	authId: string;
 	firstname: string;
 	lastname: string;
 	email: string;
-	isActivatedInSelectedSubscription: boolean;
-	isMegaAdmin: boolean;
-	ownerOfSubscriptionsIds: string[];
-	selectedTenantId: string | null;
-	isSubOwnerOfTheSelectedTenant: boolean;
-	selectedTenantAuthorizations: AuthorizationLightResult[];
-	selectedTenantRoles: RoleLightResult[];
-	version: string;
-}
+	isActivated: boolean;
+	version: Guid;
+};
 
-export interface AuthorizationLightResult {
-	id: string;
-	code: string;
-}
+export type RegisterUserCommand = {
+	authId: string;
+	firstname: string;
+	lastname: string;
+	email: string;
+	authorizationKey: string;
+};
 
-export interface RoleLightResult {
-	id: string;
-	code: string;
-}
+type OnboardMeSimpleCommand = {
+	activationCode: string;
+};

@@ -3,14 +3,14 @@ import { keycloak } from './oauth';
 import CryptoJS from 'crypto-js';
 import { TOKEN_STORE_SECRET } from '$env/static/private';
 
-export interface AuthToken {
+export type AuthToken = {
 	key: string;
 	idToken: string;
 	accessToken: string;
 	refreshToken: string;
 	expiresUtc: Date;
 	expiresRefreshUtc: Date;
-}
+};
 
 export async function createAuthTokenInCache(
 	key: string,
