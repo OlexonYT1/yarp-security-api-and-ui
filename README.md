@@ -14,6 +14,10 @@ SvelteKit Frontend added. (not working in Aspire with fnm), so:
 
 `npm install, npm run dev in svelte-link-ui folder`
 
+After all the Aspire things are mounted.
+
+Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
+
 ## Goal
 
 This project allows you to choose any OAuth provider and remain independent in terms of your security design. You can add any frontend (Blazor, Next.js, SvelteKit) or backend APIs in front or behind this security layer. For a full SPA, you can modify Yarp to be a full BFF (Backend for Frontend).
@@ -67,5 +71,5 @@ For your backend APIs, in the EF Core pooled DbContext factory, the user is inje
 
 ## How You Can Help
 
-If you find this project useful, you can help by reviewing the implementation or contributing to make it more generic (user onboarding from oauth provider via webhook or other stuff). It's a side project on a boring and not "sexy" topic for me, but I hope it can be helpful to some of you. This project aims to avoid fully managed pricey solutions because, in the end, we only need simple OAuth authentication and to manage our authorization layer by ourselves. Help on that will be appreciated.
+If you find this project useful, you can help by reviewing the implementation or contributing to make it more generic ~~(user onboarding from oauth provider via webhook or other stuff)~~ => simple onboarding implmented. It's a side project on a boring and not "sexy" topic for me, but I hope it can be helpful to some of you. This project aims to avoid fully managed pricey solutions because, in the end, we only need simple OAuth authentication and to manage our authorization layer by ourselves. Help on that will be appreciated.
 
