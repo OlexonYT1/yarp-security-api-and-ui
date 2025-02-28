@@ -55,7 +55,8 @@ namespace UbikLink.Security.Api.Features.Users.Services
                 Firstname = user.Firstname,
                 IsMegaAdmin = user.IsMegaAdmin,
                 Lastname = user.Lastname,
-                Version = user.Version
+                Version = user.Version,
+                IsEmailVerified = user.IsEmailVerified
             };
         }
 

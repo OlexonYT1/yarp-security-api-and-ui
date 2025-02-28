@@ -23,6 +23,8 @@ namespace UbikLink.Security.Api.Data.Init
                     Lastname = "9000",
                     IsMegaAdmin = false,
                     Version = SystemUserId,
+                    IsEmailVerified = false,
+                    ActivationCode = "000000",
                     AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                 };
 

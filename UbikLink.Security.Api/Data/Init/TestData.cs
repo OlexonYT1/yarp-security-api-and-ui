@@ -280,6 +280,7 @@ namespace UbikLink.Security.Api.Data.Init
                             Lastname = "Admin",
                             IsMegaAdmin = true,
                             Version = AdminUserId,
+                            IsEmailVerified = true,
                             AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                         },
                         new()
@@ -292,6 +293,7 @@ namespace UbikLink.Security.Api.Data.Init
                             IsMegaAdmin = false,
                             SelectedTenantId = null,
                             Version = UserId2,
+                            IsEmailVerified = true,
                             AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                         },
                         new()
@@ -304,6 +306,7 @@ namespace UbikLink.Security.Api.Data.Init
                             IsMegaAdmin = false,
                             SelectedTenantId = null,
                             Version = UserId1,
+                            IsEmailVerified = true,
                             AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                         },
                         new()
@@ -316,6 +319,7 @@ namespace UbikLink.Security.Api.Data.Init
                             IsMegaAdmin = false,
                             SelectedTenantId = null,
                             Version = UserId3,
+                            IsEmailVerified = true,
                             AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                         },
                         new() //Not really used anymore because the user is not active at the top lvl (managed by you oauth provider, but inactivity is managed at subscription lvl)
@@ -328,6 +332,7 @@ namespace UbikLink.Security.Api.Data.Init
                             IsMegaAdmin = false,
                             SelectedTenantId = null,
                             Version = UserIdInactivated,
+                            IsEmailVerified = true,
                             AuditInfo = new(audit.CreatedAt, audit.CreatedBy, audit.ModifiedAt, audit.ModifiedBy)
                         },
                 };

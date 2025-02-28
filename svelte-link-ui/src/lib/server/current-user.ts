@@ -2,8 +2,7 @@ import { invalidateSession, deleteSessionTokenCookie } from './session';
 import { getAuthToken, removeAuthTokenFromCache } from './backend-token';
 import { logout } from './oauth';
 import { removeUserFromCache, getUserFromCache } from './user';
-import type { Session } from './session';
-import type { RequestEvent } from '../../routes/app/$types';
+import type { RequestEvent } from '@sveltejs/kit';
 
 export async function fullLogout(event: RequestEvent): Promise<void> {
 	const session = event.locals.session;

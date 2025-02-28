@@ -49,10 +49,9 @@ var transport = builder.Configuration.GetValue<string>("Messaging:Transport") ==
     : TransportType.AzureBus;
 
 var msgCon = string.Empty;
-if (transport == TransportType.RabbitMQ)
-    msgCon = builder.Configuration.GetConnectionString("ubiklink-rabbitmq");
-else
-    msgCon = builder.Configuration.GetConnectionString("messaging");
+msgCon = transport == TransportType.RabbitMQ
+    ? builder.Configuration.GetConnectionString("ubiklink-rabbitmq")
+    : builder.Configuration.GetConnectionString("messaging");
 
 builder.Services.AddMasstransitBackend<SecurityDbContext>("UbiklinkSecurityApi",
     msgCon ?? string.Empty,

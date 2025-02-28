@@ -112,10 +112,10 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
 	});
 }
 
-export interface Session {
+export type Session = {
 	id: string;
 	userId: string;
 	expiresAt: Date;
-}
+};
 
 type SessionValidationResult = Session | null;

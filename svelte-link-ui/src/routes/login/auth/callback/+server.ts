@@ -1,12 +1,17 @@
 import { generateSessionToken, createSession, setSessionTokenCookie } from '$lib/server/session';
 import { keycloak } from '$lib/server/oauth';
-import { getUser } from '$lib/server/user';
+import {
+	getUser,
+	type RegisterUserCommand,
+	registerUser,
+	type UserRegisterResult
+} from '$lib/server/user';
 import { createAuthTokenInCache } from '$lib/server/backend-token';
 import { decodeIdToken } from 'arctic';
 import type { OAuth2Tokens } from 'arctic';
-import { getUserFromCache } from '$lib/server/user';
 import type { RequestEvent } from '@sveltejs/kit';
 import { ObjectParser } from '@pilcrowjs/object-parser';
+import { REGISTER_USER_AUTHORIZATION_KEY } from '$env/static/private';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
@@ -41,44 +46,59 @@ export async function GET(event: RequestEvent): Promise<Response> {
 	// Try to get the user from cache or the backend
 	const existingUser = await getUser(keycloakUserId, tokens.accessToken());
 
-	if (existingUser !== null) {
-		//Session and cookie
-		const sessionToken = generateSessionToken();
-		const session = await createSession(sessionToken, existingUser.authId);
-		await setSessionTokenCookie(event, sessionToken, session.expiresAt);
+	if (existingUser === null) {
+		// Try to unboard the user and
+		const user: RegisterUserCommand = {
+			authId: keycloakUserId,
+			email: claimsParser.getString('email'),
+			firstname: claimsParser.getString('given_name'),
+			lastname: claimsParser.getString('family_name'),
+			authorizationKey: REGISTER_USER_AUTHORIZATION_KEY
+		};
 
-		//Store token in cache
-		await createAuthTokenInCache(
-			existingUser.authId,
-			tokens.idToken(),
-			tokens.accessToken(),
-			tokens.refreshToken(),
-			tokens.accessTokenExpiresAt(),
-			session.expiresAt
-		);
+		const registerUserResult = await registerUser(user, tokens.accessToken());
+
+		if (registerUserResult === null) {
+			return new Response(null, {
+				status: 401
+			});
+		}
+		const newUser = await getUser(keycloakUserId, tokens.accessToken());
+
+		if (newUser == null) {
+			return new Response(null, {
+				status: 401
+			});
+		}
 
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/app'
+				Location: '/register'
 			}
-		});
-	} else {
-		return new Response(null, {
-			status: 401
 		});
 	}
 
-	// TODO: Use that for onboarding (maybe)
-	// const user = await createUser(keycloakUserId, username);
+	//Standard redirect case
+	//Session and cookie
+	const sessionToken = generateSessionToken();
+	const session = await createSession(sessionToken, existingUser.authId);
+	await setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
-	// const sessionToken = generateSessionToken();
-	// const session = await createSession(sessionToken, user.id);
-	// await setSessionTokenCookie(sessionToken, session.expiresAt);
-	// return new Response(null, {
-	// 	status: 302,
-	// 	headers: {
-	// 		Location: "/"
-	// 	}
-	// });
+	//Store token in cache
+	await createAuthTokenInCache(
+		existingUser.authId,
+		tokens.idToken(),
+		tokens.accessToken(),
+		tokens.refreshToken(),
+		tokens.accessTokenExpiresAt(),
+		session.expiresAt
+	);
+
+	return new Response(null, {
+		status: 302,
+		headers: {
+			Location: '/app'
+		}
+	});
 }

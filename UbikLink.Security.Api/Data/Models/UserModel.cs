@@ -10,6 +10,8 @@ namespace UbikLink.Security.Api.Data.Models
         public required string Lastname { get; set; }
         public required string Email { get; set; }
         public bool IsMegaAdmin { get; set; } = false;
+        public bool IsEmailVerified { get; set; } = false;
+        public string? ActivationCode { get; set; }
         public Guid? SelectedTenantId { get; set; }
         public Guid Version { get; set; }
         public AuditData AuditInfo { get; set; } = default!;

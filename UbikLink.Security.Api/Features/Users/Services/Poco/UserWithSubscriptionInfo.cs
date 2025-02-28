@@ -14,6 +14,7 @@ namespace UbikLink.Security.Api.Features.Users.Services.Poco
         public required string Email { get; set; }
         public bool IsMegaAdmin { get; set; } = false;
         public Guid? SelectedTenantId { get; set; }
+        public bool IsEmailVerified { get; set; } = false;
         public bool IsSubOwnerOfTheSelectetdTenant { get; init; } = false;
         public bool IsActiveInSelectedSubscription { get; set; }
         public List<Guid> OwnerOfSubscriptionsIds { get; set; } = [];

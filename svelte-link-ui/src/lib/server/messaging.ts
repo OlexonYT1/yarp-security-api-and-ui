@@ -90,7 +90,7 @@ export class RabbitMessageBus {
 	}
 }
 
-interface MasstransitMessage {
+type MasstransitMessage = {
 	consumerTag: string;
 	deliveryTag: number;
 	redelivered: boolean;
@@ -108,9 +108,9 @@ interface MasstransitMessage {
 	messageId: string;
 	durable: boolean;
 	body: Buffer;
-}
+};
 
-interface MasstransitEnvelope<T> {
+type MasstransitEnvelope<T> = {
 	messageId: string;
 	requestId: string | null;
 	correlationId: string | null;
@@ -139,4 +139,4 @@ interface MasstransitEnvelope<T> {
 		massTransitVersion: string;
 		operatingSystemVersion: string;
 	};
-}
+};

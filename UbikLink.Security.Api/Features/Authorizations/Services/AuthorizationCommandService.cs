@@ -13,7 +13,7 @@ namespace UbikLink.Security.Api.Features.Authorizations.Services
 
         public async Task<Either<IFeatureError, AuthorizationModel>> AddAuthorizationInDbAsync(AuthorizationModel authorization)
         {
-            _ctx.Authorizations.Add(authorization);
+            await _ctx.Authorizations.AddAsync(authorization);
             _ctx.SetAuditAndSpecialFields();
             await _ctx.SaveChangesAsync();
 
