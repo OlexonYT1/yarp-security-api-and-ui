@@ -33,6 +33,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@microsoft/signalr": "^8.0.7",
 		"@pilcrowjs/object-parser": "^0.0.4",
 		"@tailwindcss/vite": "^4.0.7",
 		"@types/crypto-js": "^4.2.2",

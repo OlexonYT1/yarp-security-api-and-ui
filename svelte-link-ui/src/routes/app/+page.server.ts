@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { fullLogout } from '$lib/server/current-user';
-import type { UserMeResult } from '$lib/types/user-types';
+import type { UserMeResult } from '$lib/shared-types/user-types';
 
 import type { Actions, RequestEvent } from './$types';
 

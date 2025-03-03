@@ -2,7 +2,7 @@ import type { Actions } from './$types';
 import type { RequestEvent } from '@sveltejs/kit';
 import { getAuthToken } from '$lib/server/backend-token';
 import { onboardMe } from '$lib/server/user';
-import type { UserMeResult } from '$lib/types/user-types';
+import type { UserMeResult } from '$lib/shared-types/user-types';
 import type { Session } from '$lib/server/session';
 import { redirect } from '@sveltejs/kit';
 import { fullLogout } from '$lib/server/current-user';

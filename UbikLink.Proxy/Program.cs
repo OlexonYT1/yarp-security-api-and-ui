@@ -118,25 +118,25 @@ builder.Services.AddAuthorizationBuilder()
   })
   .AddPolicy("CanReadTenant", policy =>
   {
-      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read" }, PermissionMode.Authorization, true));
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read"], PermissionMode.Authorization, true));
       policy.RequireAuthenticatedUser();
       policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
   })
   .AddPolicy("CanReadTenantAndReadUser", policy =>
   {
-      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "user:read" }, PermissionMode.Authorization, true));
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read"], PermissionMode.Authorization, true));
       policy.RequireAuthenticatedUser();
       policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
   })
   .AddPolicy("CanReadTenantAndWriteUserRole", policy =>
   {
-      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "user:read", "tenant-user-role:write" }, PermissionMode.Authorization, true));
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "user:read", "tenant-user-role:write"], PermissionMode.Authorization, true));
       policy.RequireAuthenticatedUser();
       policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
   })
   .AddPolicy("CanReadTenantAndReadTenantRoles", policy =>
   {
-      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(new[] { "tenant:read", "tenant-role:read" }, PermissionMode.Authorization, true));
+      policy.Requirements.Add(new UserTenantRolesOrAuthorizationsRequirement(["tenant:read", "tenant-role:read"], PermissionMode.Authorization, true));
       policy.RequireAuthenticatedUser();
       policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
   });

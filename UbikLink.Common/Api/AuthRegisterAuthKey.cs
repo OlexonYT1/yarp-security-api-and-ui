@@ -11,6 +11,7 @@ namespace UbikLink.Common.Api
     {
         public const string Position = "AuthRegister";
         public string Key { get; set; } = string.Empty;
+        public string HubSignSecureKey { get; set; } = string.Empty;
         public bool EmailActivationActivated { get; set; } = false;
     }
 }

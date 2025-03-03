@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UbikLink.Commander\UbikLink.Commander.csproj" />
     <ProjectReference Include="..\UbikLink.Proxy\UbikLink.Proxy.csproj" />
     <ProjectReference Include="..\UbikLink.Security.Api\UbikLink.Security.Api.csproj" />
     <ProjectReference Include="..\UbikLink.Security.UI\UbikLink.Security.UI.csproj" />

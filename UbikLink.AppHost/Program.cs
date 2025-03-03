@@ -19,6 +19,7 @@ var transportType = builder.AddParameter("transport-type", secret: false);
 var authTokenStoreKey = builder.AddParameter("auth-token-store-key", secret: true);
 var authRegisterAuthorizationKey = builder.AddParameter("auth-register-authorization-key", secret: true);
 var emailActivationEnable = builder.AddParameter("email-activation-enable", secret: false);
+var hubSignSecureKey = builder.AddParameter("hub-signtoken-key", secret: true);
 
 //Postgres (local)
 var db = builder.AddPostgres("ubiklink-postgres", postgresUsername, postgresPassword)
@@ -56,7 +57,16 @@ var securityApi = builder.AddProject<Projects.UbikLink_Security_Api>("ubiklink-s
     .WithEnvironment("Messaging__RabbitUser", rabbitUser)
     .WithEnvironment("Messaging__RabbitPassword", rabbitPassword)
     .WithEnvironment("AuthRegister__Key", authRegisterAuthorizationKey)
+    .WithEnvironment("AuthRegister__HubSignSecureKey", hubSignSecureKey)
     .WithEnvironment("AuthRegister__EmailActivationActivated", emailActivationEnable)
+    .WithReference(securityDB)
+    .WaitFor(securityDB)
+    .WithReference(rabbitmq)
+    .WithReference(serviceBus);
+
+//Hub
+var hub = builder.AddProject<Projects.UbikLink_Commander>("ubiklink-commander")
+    .WithEnvironment("AuthRegister__HubSignSecureKey", hubSignSecureKey)
     .WithReference(securityDB)
     .WaitFor(securityDB)
     .WithReference(rabbitmq)
@@ -76,8 +86,10 @@ var proxy = builder.AddProject<Projects.UbikLink_Proxy>("ubiklink-proxy")
     .WithReference(cache)
     .WithReference(serviceBus)
     .WithReference(rabbitmq)
+    .WithReference(hub)
     .WaitFor(cache)
     .WaitFor(securityApi)
+    .WaitFor(hub)
     .WaitFor(keycloak);
     
 //.WithReference(rabbitmq)
@@ -104,6 +116,7 @@ builder.AddProject<Projects.UbikLink_Security_UI>("ubiklink-security-ui")
     .WithEnvironment("Messaging__Transport", transportType)
     .WithEnvironment("Messaging__RabbitUser", rabbitUser)
     .WithEnvironment("Messaging__RabbitPassword", rabbitPassword);
+
 
 //Add npm sevltekit project (not work with fnm.... because of path)
 //builder.AddNpmApp("svelte-ui", "../svelte-link-ui","dev")
