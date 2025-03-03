@@ -7,17 +7,7 @@
 - Compatible with any OAuth/OpenID Connect provider (e.g., Keycloak).
 - Optional security UI for quick bootstrapping (Blazor, and components in auto mode).
 - **Designed to manage subscriptions and multi-tenants.**
-
-## News
-
-SvelteKit Frontend added. (not working in Aspire with fnm), so:
-
-`npm install, npm run dev in svelte-link-ui folder`
-
-After all the Aspire things are mounted.
-
-- Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
-- **SignalR full implementation with secured Hub and custom token.**
+- SignalR example in Sveltkit project (realtime app)
 
 ## Goal
 
@@ -58,6 +48,17 @@ Open the security api /scalar to see all available endpoints.
 
 You can modify the setup based on your requirements. The project is configured with Keycloak and RabbitMQ (for revoke cache requests) but is compatible with other systems like Azure Service Bus (tested) and 0Auth (tested). You can also remove some parts if needed (caching, service bus)
 
+## News
+
+SvelteKit Frontend added. (not working in Aspire with fnm), so:
+
+`npm install, npm run dev in svelte-link-ui folder`
+
+After all the Aspire things are mounted.
+
+- Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
+- **SignalR full implementation with secured Hub and custom token.**
+
 ## Dependencies
 
 Show your support for the following dependencies on their GitHub pages:
@@ -72,5 +73,5 @@ For your backend APIs, in the EF Core pooled DbContext factory, the user is inje
 
 ## How You Can Help
 
-If you find this project useful, you can help by reviewing the implementation or contributing to make it more generic ~~(user onboarding from oauth provider via webhook or other stuff)~~ => simple onboarding implmented. It's a side project on a boring and not "sexy" topic for me, but I hope it can be helpful to some of you. This project aims to avoid fully managed pricey solutions because, in the end, we only need simple OAuth authentication and to manage our authorization layer by ourselves. Help on that will be appreciated.
+If you find this project useful, you can help by reviewing the implementation or contributing to make it more generic ~~(user onboarding from oauth provider via webhook or other stuff)~~ => simple onboarding implemented. It's a side project on a boring and not "sexy" topic for me, but I hope it can be helpful to some of you. This project aims to avoid fully managed pricey solutions because, in the end, we only need simple OAuth authentication and to manage our authorization layer by ourselves. Help on that will be appreciated.
 
