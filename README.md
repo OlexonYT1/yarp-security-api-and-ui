@@ -16,7 +16,8 @@ SvelteKit Frontend added. (not working in Aspire with fnm), so:
 
 After all the Aspire things are mounted.
 
-Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
+- Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
+- **SignalR full implementation with secured Hub and custom token.**
 
 ## Goal
 
