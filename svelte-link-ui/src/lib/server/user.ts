@@ -1,7 +1,7 @@
 import { redis } from './redis';
 import { Guid } from 'guid-ts';
 import { BACKEND_PROXY_URL } from '$env/static/private';
-import type { UserMeResult } from '../types/user-types';
+import type { UserMeResult } from '../shared-types/user-types';
 
 export async function createUserInCache(user: UserMeResult, expires: Date): Promise<UserMeResult> {
 	await redis.set(

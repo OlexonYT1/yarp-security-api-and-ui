@@ -19,6 +19,11 @@
 	::file-selector-button {
 		border-color: var(--color-gray-200, currentColor);
 	}
+	@font-face {
+		font-family: Geist;
+		font-display: swap;
+		src: url('/fonts/geist.woff2') format('woff2');
+	}
 }
 
 :root {
@@ -42,6 +47,14 @@
 	--input: 20 5.9% 90%;
 	--ring: 20 14.3% 4.1%;
 	--radius: 0.5rem;
+	--sidebar-background: 0 0% 98%;
+	--sidebar-foreground: 240 5.3% 26.1%;
+	--sidebar-primary: 240 5.9% 10%;
+	--sidebar-primary-foreground: 0 0% 98%;
+	--sidebar-accent: 240 4.8% 95.9%;
+	--sidebar-accent-foreground: 240 5.9% 10%;
+	--sidebar-border: 220 13% 91%;
+	--sidebar-ring: 217.2 91.2% 59.8%;
 }
 .dark {
 	--background: 20 14.3% 4.1%;
@@ -63,12 +76,20 @@
 	--border: 12 6.5% 15.1%;
 	--input: 12 6.5% 15.1%;
 	--ring: 24 5.7% 82.9%;
+	--sidebar-background: 240 5.9% 10%;
+	--sidebar-foreground: 240 4.8% 95.9%;
+	--sidebar-primary: 224.3 76.3% 48%;
+	--sidebar-primary-foreground: 0 0% 100%;
+	--sidebar-accent: 240 3.7% 15.9%;
+	--sidebar-accent-foreground: 240 4.8% 95.9%;
+	--sidebar-border: 240 3.7% 15.9%;
+	--sidebar-ring: 217.2 91.2% 59.8%;
 }
 
 @theme inline {
 	/* Fonts */
 	--font-sans:
-		'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 		'Segoe UI Symbol', 'Noto Color Emoji';
 	--font-mono:
 		'Source Code Pro Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -119,19 +140,24 @@
 
 	/* Keyframes */
 	@keyframes accordion-down {
-		from: {
-			height: 0;
+		from {
+			transform: scaleY(0);
+			transform-origin: top;
 		}
-		to: {
-			height: var(--bits-accordion-content-height);
+		to {
+			transform: scaleY(1);
+			transform-origin: top;
 		}
 	}
+
 	@keyframes accordion-up {
-		from: {
-			height: var(--bits-accordion-content-height);
+		from {
+			transform: scaleY(1);
+			transform-origin: top;
 		}
-		to: {
-			height: 0;
+		to {
+			transform: scaleY(0);
+			transform-origin: top;
 		}
 	}
 	@keyframes caret-blink {
@@ -153,5 +179,14 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+	}
+	p {
+		@apply leading-7 [&:not(:first-child)]:mt-6;
+	}
+	h1 {
+		@apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+	}
+	h2 {
+		@apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
 	}
 }

@@ -16,7 +16,7 @@ import {
 	removeAllUsersFromCache,
 	removeUserFromCache
 } from './lib/server/user';
-import type { UserMeResult } from '$lib/types/user-types';
+import type { UserMeResult } from '$lib/shared-types/user-types';
 
 const bucket = new TokenBucket<string>(100, 1);
 const LOGIN_URL = '/login/auth';

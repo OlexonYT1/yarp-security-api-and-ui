@@ -4,19 +4,17 @@
 		UserMeResult,
 		AuthorizationLightResult,
 		RoleLightResult
-	} from '$lib/types/user-types';
+	} from '$lib/shared-types/user-types';
 
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import ToggleTheme from '$lib/components/toggle-theme.svelte';
 
-	export let data: PageData;
+	const { data }: PageProps = $props();
 	const user = data.user as UserMeResult;
 </script>
 
 <div class="flex justify-between">
 	<h1 class="bg-secondary text-3xl font-bold underline">Hi, {user.firstname} {user.lastname}!</h1>
-	<ToggleTheme />
 </div>
 <p>You are connected, and here, you can look at your security info</p>
 <ul>
