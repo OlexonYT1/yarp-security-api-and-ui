@@ -28,13 +28,22 @@
 
 	// State
 	let messageInput = $state('');
-	let messages: string[] = $state([]);
+	let messages = $state.raw<string[]>([]);
 	let messagesContainer: HTMLDivElement;
+	let connectionColorClass = $derived(
+		chat.connectionStatus === 'Connected'
+			? 'bg-green-500'
+			: chat.connectionStatus === 'Connecting' || chat.connectionStatus === 'Reconnecting'
+				? 'bg-yellow-500'
+				: 'bg-red-500'
+	);
 
+	// Compo events
 	onMount(async () => {
 		await chat.connect();
 		chat.on('ReceiveMessage', (user: string, message: string) => {
-			messages = [...messages, `${user}: ${message}`];
+			addMessage(user, message);
+			scrollToBottom();
 		});
 	});
 
@@ -44,15 +53,12 @@
 		}
 	});
 
-	$effect(() => {
-		// This will run whenever messages change
-		messages;
-		if (messagesContainer) {
-			setTimeout(() => {
-				messagesContainer.scrollTop = messagesContainer.scrollHeight;
-			}, 0);
-		}
-	});
+	//Functions
+	function addMessage(user: string, message: string) {
+		// Update the raw array by reassignment
+		const newMessages = [...messages, `${user}: ${message}`];
+		messages = newMessages;
+	}
 
 	async function sendMessage() {
 		if (!messageInput.trim() || !chat.isConnected || !chat) return;
@@ -61,13 +67,13 @@
 		messageInput = '';
 	}
 
-	let connectionColorClass = $derived(
-		chat.connectionStatus === 'Connected'
-			? 'bg-green-500'
-			: chat.connectionStatus === 'Connecting' || chat.connectionStatus === 'Reconnecting'
-				? 'bg-yellow-500'
-				: 'bg-red-500'
-	);
+	function scrollToBottom() {
+		if (messagesContainer) {
+			setTimeout(() => {
+				messagesContainer.scrollTop = messagesContainer.scrollHeight;
+			}, 0);
+		}
+	}
 </script>
 
 <div class="mx-auto max-w-2xl p-4">
